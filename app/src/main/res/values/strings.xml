@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">C++Academy</string>
+    <string name="module">Модули</string>
+    <string name="tem">Темы</string>
+    <string name="settings">Настройки</string>
+    <string name="progress">Прогресс</string>
+</resources>
