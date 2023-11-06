@@ -279,6 +279,7 @@ enum class NavigationBarItems(val icon: ImageVector) {
 }
 
 
+/*
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
@@ -286,3 +287,4 @@ fun GreetingPreview() {
         ScreenApp()
     }
 }
+*/
