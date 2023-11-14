@@ -166,8 +166,8 @@ fun ScreenApp(
             NavHost(
                 navController = navController,
                 startDestination = MainScreen.Lesson.name,
-                modifier = Modifier
-                    .padding(paddingValues)
+                /*modifier = Modifier
+                    .padding(paddingValues)*/
             ) {
                 //экран уроков
                 composable(route = MainScreen.Lesson.name) {
@@ -273,13 +273,13 @@ private fun very_beautiful_control_panel(
 
 
 enum class NavigationBarItems(val icon: ImageVector) {
-    Home(icon = Icons.Default.Home),
+    Home(icon = Icons.Default.List),
     Courses(icon = Icons.Default.List)
 
 }
 
 
-/*
+
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
@@ -287,4 +287,4 @@ fun GreetingPreview() {
         ScreenApp()
     }
 }
-*/
+

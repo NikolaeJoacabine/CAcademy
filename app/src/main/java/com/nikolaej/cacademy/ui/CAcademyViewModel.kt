@@ -15,4 +15,6 @@ class CAcademyViewModel : ViewModel() {
     var selectedIndex by mutableStateOf(0)
         internal set
 
+
+
 }
