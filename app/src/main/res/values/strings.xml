@@ -4,4 +4,8 @@
     <string name="tem">Темы</string>
     <string name="settings">Настройки</string>
     <string name="progress">Прогресс</string>
+    <string name="lesson">Урок</string>
+    <string name="lesson_vvedenie_1">Введение</string>
+    <string name="lesson_vvedenie_1_description">Введение в C++ и его история</string>
+
 </resources>
