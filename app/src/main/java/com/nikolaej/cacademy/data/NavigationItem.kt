@@ -38,6 +38,5 @@ val items = listOf(
         selectedIcon = Icons.Filled.ThumbUp,
         unselectedIcon = Icons.Outlined.ThumbUp,
         nav = MainScreen.Progress
-    ),
-
     )
+)

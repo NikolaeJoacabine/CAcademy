@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Menu
@@ -48,6 +49,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -79,13 +81,13 @@ enum class MainScreen(@StringRes val title: Int) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScreenApp(
-    gameviewModel: CAcademyViewModel = viewModel(),
+    //gameviewModel: CAcademyViewModel = viewModel(),
     navController: NavHostController = rememberNavController()
 ) {
 
-    val backStackEntry by navController.currentBackStackEntryAsState()
+    val navBackStackEntry by navController.currentBackStackEntryAsState() //получаем в текстовом виде название страницы
     val currentScreen = MainScreen.valueOf(
-        backStackEntry?.destination?.route ?: MainScreen.Lesson.name
+        navBackStackEntry?.destination?.route ?: MainScreen.Lesson.name
     )
 
     val drawerState =
@@ -93,8 +95,6 @@ fun ScreenApp(
     val scope = rememberCoroutineScope()
     var selectedItemIndex by rememberSaveable { mutableStateOf(0) }
 
-
-    val navBackStackEntry by navController.currentBackStackEntryAsState() //получаем в текстовом виде название страницы
 
     //боковое меню навигации в самом приложении
     ModalNavigationDrawer(
@@ -107,12 +107,7 @@ fun ScreenApp(
                             Text(text = item.title)
                         },
                         selected = index == selectedItemIndex, onClick = {
-                            if (navBackStackEntry?.destination?.route == "Progress") {
-                                navController.popBackStack(route = item.nav.toString(), inclusive = false)
-                            }else{
-                                navController.navigate(route = item.nav.toString())
-                            }
-
+                            navController.navigate(route = item.nav.toString())
                             selectedItemIndex = index
                             scope.launch {
                                 drawerState.close()
@@ -134,7 +129,8 @@ fun ScreenApp(
                 }
             }
         },
-        drawerState = drawerState
+        drawerState = drawerState,
+        gesturesEnabled = false
     ) {
         Scaffold(
             modifier = Modifier.padding(all = 12.dp),
@@ -143,7 +139,9 @@ fun ScreenApp(
                 beautiful_app_bar(
                     drawerState = drawerState,
                     scope = scope,
-                    currentScreenTitle = currentScreen.title
+                    currentScreenTitle = currentScreen.title,
+                    navBackStackEntry = navBackStackEntry,
+                    navController = navController
                 )
             },
             //нижняя панель навигации( по курсам и урокам )
@@ -166,8 +164,8 @@ fun ScreenApp(
             NavHost(
                 navController = navController,
                 startDestination = MainScreen.Lesson.name,
-                /*modifier = Modifier
-                    .padding(paddingValues)*/
+                modifier = Modifier
+                    .padding(paddingValues)
             ) {
                 //экран уроков
                 composable(route = MainScreen.Lesson.name) {
@@ -196,11 +194,14 @@ fun ScreenApp(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun beautiful_app_bar(
-
     drawerState: DrawerState,
     scope: CoroutineScope,
     @StringRes currentScreenTitle: Int,
+    navBackStackEntry: NavBackStackEntry?,
+    navController: NavHostController
 ) {
+
+
     //верхняя панель
     TopAppBar(
         title = {
@@ -209,14 +210,25 @@ private fun beautiful_app_bar(
         //что делает кнопка
         navigationIcon = {
             IconButton(onClick = {
-                scope.launch {
-                    drawerState.open()
+                if (navBackStackEntry?.destination?.route == "Lesson" || navBackStackEntry?.destination?.route == "Module") {
+                    scope.launch {
+                        drawerState.open()
+                    }
+                } else {
+                    navController.navigateUp()
+                }
+            }
+            ) {
+                if (navBackStackEntry?.destination?.route == "Lesson" || navBackStackEntry?.destination?.route == "Module") {
+                    Icon(
+                        imageVector = Icons.Default.Menu, contentDescription = null
+                    )
+                } else {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack, contentDescription = null
+                    )
                 }
 
-            }) {
-                Icon(
-                    imageVector = Icons.Default.Menu, contentDescription = null
-                )
             }
         },
         colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = MaterialTheme.colorScheme.primary),
@@ -277,7 +289,6 @@ enum class NavigationBarItems(val icon: ImageVector) {
     Courses(icon = Icons.Default.List)
 
 }
-
 
 
 @Preview(showBackground = true)
