@@ -7,5 +7,34 @@
     <string name="lesson">Урок</string>
     <string name="lesson_vvedenie_1">Введение</string>
     <string name="lesson_vvedenie_1_description">Введение в C++ и его история</string>
-
+    <string name="lesson_vvedenie_2"></string>
+    <string name="leson_vvedenie_2_description"></string>
+    <string name="lesson_vvedenie_3"></string>
+    <string name="leson_vvedenie_3_description"></string>
+    <string name="lesson_vvedenie_4"></string>
+    <string name="leson_vvedenie_4_description"></string>
+    <string name="lesson_vvedenie_5"></string>
+    <string name="lesson_vvedenie_5_description"></string>
+    <string name="lesson_vvedenie_6"></string>
+    <string name="lesson_vvedenie_6_description"></string>
+    <string name="lesson_vvedenie_7"></string>
+    <string name="lesson_vvedenie_7_description"></string>
+    <string name="lesson_vvedenie_8"></string>
+    <string name="lesson_vvedenie_8_description"></string>
+    <string name="lesson_vvedenie_9"></string>
+    <string name="lesson_vvedenie_9_description"></string>
+    <string name="lesson_vvedenie_10"></string>
+    <string name="lesson_vvedenie_10_description"></string>
+    <string name="lesson_vvedenie_11"></string>
+    <string name="lesson_vvedenie_11_description"></string>
+    <string name="lesson_vvedenie_12"></string>
+    <string name="lesson_vvedenie_12_description"></string>
+    <string name="lesson_vvedenie_13"></string>
+    <string name="lesson_vvedenie_13_description"></string>
+    <string name="lesson_vvedenie_14"></string>
+    <string name="lesson_vvedenie_14_description"></string>
+    <string name="lesson_vvedenie_15"></string>
+    <string name="lesson_vvedenie_15_description"></string>
+    <string name="lesson_vvedenie_16"></string>
+    <string name="lesson_vvedenie_16_description"></string>
 </resources>

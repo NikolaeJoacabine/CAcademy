@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Menu
@@ -60,6 +61,7 @@ import com.exyte.animatednavbar.animation.balltrajectory.Parabolic
 import com.exyte.animatednavbar.animation.indendshape.Height
 import com.exyte.animatednavbar.animation.indendshape.shapeCornerRadius
 import com.exyte.animatednavbar.utils.noRippleClickable
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.nikolaej.cacademy.data.items
 import com.nikolaej.cacademy.ui.CAcademyViewModel
 import com.nikolaej.cacademy.ui.screen.LessonScreen
@@ -95,20 +97,35 @@ fun ScreenApp(
     val scope = rememberCoroutineScope()
     var selectedItemIndex by rememberSaveable { mutableStateOf(0) }
 
-
     //боковое меню навигации в самом приложении
     ModalNavigationDrawer(
         drawerContent = {
             ModalDrawerSheet {
-                Spacer(modifier = Modifier.height(30.dp))
+                Spacer(modifier = Modifier.size(15.dp))
+                IconButton(onClick = {
+                    scope.launch {
+                        drawerState.close()
+                    }
+                }
+                ) {
+                    Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
+                }
+                Spacer(modifier = Modifier.height(10.dp))
                 items.forEachIndexed { index, item ->
                     NavigationDrawerItem(
                         label = {
                             Text(text = item.title)
                         },
-                        selected = index == selectedItemIndex, onClick = {
+                        selected = index == selectedItemIndex,
+
+                        onClick = {
                             navController.navigate(route = item.nav.toString())
-                            selectedItemIndex = index
+                            selectedItemIndex =
+                                if (navBackStackEntry?.destination?.route == "Lesson" || navBackStackEntry?.destination?.route == "Module") {
+                                    0
+                                } else {
+                                    index
+                                }
                             scope.launch {
                                 drawerState.close()
                             }
@@ -131,9 +148,11 @@ fun ScreenApp(
         },
         drawerState = drawerState,
         gesturesEnabled = false
+
+
     ) {
         Scaffold(
-            modifier = Modifier.padding(all = 12.dp),
+            modifier = Modifier.padding(start = 12.dp, top = 0.dp, end = 12.dp, bottom = 12.dp),
             topBar = {
                 //верхняя информационная панель, отсюда вызывается глобальное меню в приложении
                 beautiful_app_bar(
@@ -160,12 +179,13 @@ fun ScreenApp(
             }
         ) { paddingValues ->
 
+
             //навигация по всему приложению
             NavHost(
                 navController = navController,
                 startDestination = MainScreen.Lesson.name,
                 modifier = Modifier
-                    .padding(paddingValues)
+                    //.padding(paddingValues)
             ) {
                 //экран уроков
                 composable(route = MainScreen.Lesson.name) {
@@ -201,7 +221,7 @@ private fun beautiful_app_bar(
     navController: NavHostController
 ) {
 
-
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     //верхняя панель
     TopAppBar(
         title = {
@@ -216,6 +236,7 @@ private fun beautiful_app_bar(
                     }
                 } else {
                     navController.navigateUp()
+
                 }
             }
             ) {
@@ -231,6 +252,7 @@ private fun beautiful_app_bar(
 
             }
         },
+        scrollBehavior = scrollBehavior,
         colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = MaterialTheme.colorScheme.primary),
         modifier = Modifier.clip(shape = RoundedCornerShape(15.dp)),
     )
@@ -249,14 +271,15 @@ private fun very_beautiful_control_panel(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
 
     AnimatedNavigationBar(
-        modifier = Modifier.height(64.dp),
+        modifier = Modifier.height(75.dp),
         selectedIndex = gameviewModel.selectedIndex,
         cornerRadius = shapeCornerRadius(cornerRadius = 25.dp),
         ballAnimation = Parabolic(tween(600)),
         barColor = MaterialTheme.colorScheme.primary,
         ballColor = MaterialTheme.colorScheme.primary,
-        indentAnimation = Height(tween(300))
-    ) {
+        indentAnimation = Height(tween(300)),
+
+        ) {
         navigationBarItems.forEach { item ->
             Box(
                 modifier = Modifier
@@ -285,7 +308,7 @@ private fun very_beautiful_control_panel(
 
 
 enum class NavigationBarItems(val icon: ImageVector) {
-    Home(icon = Icons.Default.List),
+    Home(icon = Icons.Default.DateRange),
     Courses(icon = Icons.Default.List)
 
 }

@@ -7,3 +7,5 @@ data class Moduls(
     @StringRes val descriptinfull: Int,
     @StringRes val fullDescriptor: Int
 )
+
+
