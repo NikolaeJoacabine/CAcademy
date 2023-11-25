@@ -66,8 +66,15 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-    implementation("com.exyte:animated-navigation-bar:1.0.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
-    implementation("androidx.navigation:navigation-compose:2.7.5")
-    implementation ("com.google.accompanist:accompanist-systemuicontroller:0.17.0")
+
+    implementation("com.exyte:animated-navigation-bar:1.0.0")//библиотека для красивой анимации нижней панели
+
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")//для сохранения состояний
+
+    implementation("androidx.navigation:navigation-compose:2.7.5")//для навигиции библиотека
+
+    //implementation ("com.google.accompanist:accompanist-systemuicontroller:0.17.0")
+
+    implementation("androidx.compose.material:material-icons-extended-android:1.5.4")
+
 }

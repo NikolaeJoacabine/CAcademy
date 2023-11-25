@@ -15,10 +15,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Book
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
@@ -38,14 +37,12 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -61,10 +58,10 @@ import com.exyte.animatednavbar.animation.balltrajectory.Parabolic
 import com.exyte.animatednavbar.animation.indendshape.Height
 import com.exyte.animatednavbar.animation.indendshape.shapeCornerRadius
 import com.exyte.animatednavbar.utils.noRippleClickable
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.nikolaej.cacademy.data.items
 import com.nikolaej.cacademy.ui.CAcademyViewModel
 import com.nikolaej.cacademy.ui.screen.LessonScreen
+import com.nikolaej.cacademy.ui.screen.LessonScreenCard
 import com.nikolaej.cacademy.ui.screen.ModuleScreen
 import com.nikolaej.cacademy.ui.screen.ProgressScreeen
 import com.nikolaej.cacademy.ui.screen.SettingsScreen
@@ -73,23 +70,24 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 enum class MainScreen(@StringRes val title: Int) {
-    Lesson(title = R.string.tem),
+    Start(title = R.string.tem),
     Module(title = R.string.module),
     Settings(title = R.string.settings),
-    Progress(title = R.string.progress)
+    Progress(title = R.string.progress),
+    Lesson(title = R.string.lesson)
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScreenApp(
-    //gameviewModel: CAcademyViewModel = viewModel(),
+    gameviewModel: CAcademyViewModel = viewModel(),
     navController: NavHostController = rememberNavController()
 ) {
 
     val navBackStackEntry by navController.currentBackStackEntryAsState() //получаем в текстовом виде название страницы
     val currentScreen = MainScreen.valueOf(
-        navBackStackEntry?.destination?.route ?: MainScreen.Lesson.name
+        navBackStackEntry?.destination?.route ?: MainScreen.Start.name
     )
 
     val drawerState =
@@ -102,11 +100,13 @@ fun ScreenApp(
         drawerContent = {
             ModalDrawerSheet {
                 Spacer(modifier = Modifier.size(15.dp))
-                IconButton(onClick = {
-                    scope.launch {
-                        drawerState.close()
+                IconButton(
+                    modifier = Modifier.padding(start = 12.dp),
+                    onClick = {
+                        scope.launch {
+                            drawerState.close()
+                        }
                     }
-                }
                 ) {
                     Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
                 }
@@ -121,7 +121,7 @@ fun ScreenApp(
                         onClick = {
                             navController.navigate(route = item.nav.toString())
                             selectedItemIndex =
-                                if (navBackStackEntry?.destination?.route == "Lesson" || navBackStackEntry?.destination?.route == "Module") {
+                                if (navBackStackEntry?.destination?.route == "Start" || navBackStackEntry?.destination?.route == "Module") {
                                     0
                                 } else {
                                     index
@@ -166,7 +166,7 @@ fun ScreenApp(
             //нижняя панель навигации( по курсам и урокам )
             bottomBar = {
                 AnimatedVisibility(
-                    navBackStackEntry?.destination?.route == "Lesson"
+                    navBackStackEntry?.destination?.route == "Start"
                             || navBackStackEntry?.destination?.route == "Module",
                     enter = fadeIn(tween(800)) + slideInVertically(tween(600),
                         initialOffsetY = { fullHeight -> fullHeight }),
@@ -174,7 +174,7 @@ fun ScreenApp(
                         tween(600),
                         targetOffsetY = { fullHeight -> fullHeight })
                 ) {
-                    very_beautiful_control_panel(navController)
+                    very_beautiful_control_panel(navController, gameviewModel)
                 }
             }
         ) { paddingValues ->
@@ -183,17 +183,19 @@ fun ScreenApp(
             //навигация по всему приложению
             NavHost(
                 navController = navController,
-                startDestination = MainScreen.Lesson.name,
+                startDestination = MainScreen.Start.name,
                 modifier = Modifier
-                    //.padding(paddingValues)
+                    .padding(paddingValues)
             ) {
                 //экран уроков
-                composable(route = MainScreen.Lesson.name) {
-                    LessonScreen()
+                composable(route = MainScreen.Start.name) {
+
+                    LessonScreenCard(gameviewModel)
                 }
                 //экран модулей
                 composable(route = MainScreen.Module.name) {
-                    ModuleScreen()
+
+                    ModuleScreen(gameviewModel)
                 }
                 //экран прогресса
                 composable(route = MainScreen.Progress.name) {
@@ -203,9 +205,11 @@ fun ScreenApp(
                 composable(route = MainScreen.Settings.name) {
                     SettingsScreen()
                 }
+                composable(route = MainScreen.Lesson.name) {
+                    LessonScreen()
+                }
 
             }
-
         }
     }
 }
@@ -230,7 +234,7 @@ private fun beautiful_app_bar(
         //что делает кнопка
         navigationIcon = {
             IconButton(onClick = {
-                if (navBackStackEntry?.destination?.route == "Lesson" || navBackStackEntry?.destination?.route == "Module") {
+                if (navBackStackEntry?.destination?.route == "Start" || navBackStackEntry?.destination?.route == "Module") {
                     scope.launch {
                         drawerState.open()
                     }
@@ -240,7 +244,7 @@ private fun beautiful_app_bar(
                 }
             }
             ) {
-                if (navBackStackEntry?.destination?.route == "Lesson" || navBackStackEntry?.destination?.route == "Module") {
+                if (navBackStackEntry?.destination?.route == "Start" || navBackStackEntry?.destination?.route == "Module") {
                     Icon(
                         imageVector = Icons.Default.Menu, contentDescription = null
                     )
@@ -262,16 +266,10 @@ private fun beautiful_app_bar(
 @Composable
 private fun very_beautiful_control_panel(
     navController: NavHostController,
-    gameviewModel: CAcademyViewModel = viewModel(),
+    gameviewModel: CAcademyViewModel
 ) {
-
-    val navigationBarItems = remember { NavigationBarItems.values() }
-
-
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-
     AnimatedNavigationBar(
-        modifier = Modifier.height(75.dp),
+        modifier = Modifier.height(70.dp),
         selectedIndex = gameviewModel.selectedIndex,
         cornerRadius = shapeCornerRadius(cornerRadius = 25.dp),
         ballAnimation = Parabolic(tween(600)),
@@ -280,38 +278,44 @@ private fun very_beautiful_control_panel(
         indentAnimation = Height(tween(300)),
 
         ) {
-        navigationBarItems.forEach { item ->
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .noRippleClickable {
-                        gameviewModel.selectedIndex = item.ordinal
-                        if (navBackStackEntry?.destination?.route == "Lesson") {
-                            navController.navigate(MainScreen.Module.name)
-                        } else {
-                            navController.popBackStack(MainScreen.Lesson.name, inclusive = false)
-                        }
 
-                    },
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    modifier = Modifier.size(30.dp),
-                    imageVector = item.icon,
-                    contentDescription = null,
-                )
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .noRippleClickable {
+                    navController.popBackStack(MainScreen.Start.name, inclusive = false)
+                    gameviewModel.selectedIndex = 0
+                },
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                imageVector = Icons.Default.AccountBalance,
+                contentDescription = null,
+                modifier = Modifier.size(27.dp)
+            )
 
-            }
+        }
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .noRippleClickable {
+                    navController.navigate(MainScreen.Module.name)
+                    gameviewModel.selectedIndex = 1
+                },
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                imageVector = Icons.Default.Book,
+                contentDescription = null,
+                modifier = Modifier.size(27.dp)
+            )
         }
     }
 }
 
 
-enum class NavigationBarItems(val icon: ImageVector) {
-    Home(icon = Icons.Default.DateRange),
-    Courses(icon = Icons.Default.List)
 
-}
 
 
 @Preview(showBackground = true)

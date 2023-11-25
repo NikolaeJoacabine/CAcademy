@@ -8,9 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import com.nikolaej.cacademy.ui.CAcademyViewModel
 
 @Composable
-fun ModuleScreen(){
+fun ModuleScreen(
+    gameViewModel: CAcademyViewModel
+){
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,

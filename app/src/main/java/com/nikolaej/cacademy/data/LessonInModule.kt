@@ -72,15 +72,15 @@ val lesson = listOf(
     ),LessonInModule(
         nameLesson = R.string.lesson_vvedenie_14,
         description = R.string.lesson_vvedenie_14_description,
-        countLesson = 15
+        countLesson = 14
     ),LessonInModule(
         nameLesson = R.string.lesson_vvedenie_15,
         description = R.string.lesson_vvedenie_15_description,
-        countLesson = 16
+        countLesson = 15
     ),LessonInModule(
         nameLesson = R.string.lesson_vvedenie_16,
         description = R.string.lesson_vvedenie_16_description,
-        countLesson = 17
+        countLesson = 16
     ),
 
 

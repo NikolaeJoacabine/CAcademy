@@ -25,7 +25,7 @@ val items = listOf(
         title = "Меню",
         selectedIcon = Icons.Filled.Home,
         unselectedIcon = Icons.Outlined.Home,
-        nav = MainScreen.Lesson
+        nav = MainScreen.Start
     ),
     NavigationItem(
         title = "Настройки",
