@@ -8,7 +8,7 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.ThumbUp
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.nikolaej.cacademy.MainScreen
+import com.nikolaej.cacademy.ui.MainScreen
 
 data class NavigationItem(
     val title: String,
