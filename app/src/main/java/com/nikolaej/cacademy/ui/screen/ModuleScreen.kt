@@ -13,13 +13,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.exyte.animatednavbar.utils.noRippleClickable
 import com.nikolaej.cacademy.dataSQL.Lesson
+import com.nikolaej.cacademy.ui.CAcademyViewModel
+import com.nikolaej.cacademy.ui.MainScreen
 
 @Composable
 fun ModuleScreen(
     module: List<Lesson>,
-    onModuleClick: (String) -> Unit
+    nameModule: CAcademyViewModel,
+    navController: NavHostController
 ) {
     var sosto: String? = ""
 
@@ -33,9 +37,10 @@ fun ModuleScreen(
 
             if (sosto != module.nameModule) {
                 ModuleCard(
-                    name = module.nameModule,
-                    onModuleClick = onModuleClick
-                )
+                name = module.nameModule,
+                nameModule = nameModule,
+                navController = navController
+            )
                 sosto = module.nameModule
             }
         }
@@ -45,19 +50,22 @@ fun ModuleScreen(
 @Composable
 fun ModuleCard(
     name: String,
-    onModuleClick: ((String) -> Unit)? = null
+    nameModule: CAcademyViewModel,
+    navController: NavHostController
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 4.dp)
-            .clickable(enabled = onModuleClick != null) {
-                onModuleClick?.invoke(name)
+            .noRippleClickable  {
+                nameModule.nameModule = name
+                navController.navigate(MainScreen.Start.name)
              }
     ) {
         Text(
             text = name,
-            modifier = Modifier.padding(4.dp)
+            modifier = Modifier.padding(4.dp),
+
         )
     }
 }

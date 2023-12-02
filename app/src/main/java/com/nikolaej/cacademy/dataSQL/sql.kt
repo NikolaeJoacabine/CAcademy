@@ -31,8 +31,6 @@ data class Lesson(
     @ColumnInfo(name = "passTheTask")
     val passTheTask: Boolean,
 
-    @ColumnInfo(name = "passTheModule")
-    val passTheModule: Boolean,
 
 )
 
@@ -46,11 +44,11 @@ interface LessonDao{
     @Query(
         """
             SELECT * FROM lesson
-            where nameModule = "ООП"
+            where nameModule = :nameModule
             ORDER BY id ASC;
         """
     )
-    fun getAllLesson(/*nameModule: String*/): Flow<List<Lesson>>
+    fun getAllLesson(nameModule: String): Flow<List<Lesson>>
 }
 
 @Database(entities = arrayOf(Lesson::class), version = 1)
@@ -82,7 +80,7 @@ abstract class AppDatabase: RoomDatabase() {
 class LessonViewModel(private val lessonDao: LessonDao): ViewModel() {
     fun getAll(): Flow<List<Lesson>> = lessonDao.getAllModule()
 
-    fun getLesson(nameLesson: String): Flow<List<Lesson>> = lessonDao.getAllLesson(/*nameLesson*/)
+    fun getLesson(nameLesson: String): Flow<List<Lesson>> = lessonDao.getAllLesson(nameLesson)
     companion object {
         val factory : ViewModelProvider.Factory = viewModelFactory {
             initializer {

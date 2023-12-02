@@ -80,6 +80,10 @@ dependencies {
 
     implementation("androidx.compose.material:material-icons-extended-android:1.5.4")
 
+    implementation("com.google.accompanist:accompanist-pager:0.27.1")
+    implementation("com.google.accompanist:accompanist-pager-indicators:0.27.1")
+
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.28.0")
 
 
 }

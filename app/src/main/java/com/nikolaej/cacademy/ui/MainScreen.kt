@@ -1,6 +1,6 @@
 package com.nikolaej.cacademy.ui
 
-import androidx.annotation.StringRes
+import android.app.Activity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -25,6 +25,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
@@ -44,24 +45,23 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.exyte.animatednavbar.AnimatedNavigationBar
 import com.exyte.animatednavbar.animation.balltrajectory.Parabolic
 import com.exyte.animatednavbar.animation.indendshape.Height
 import com.exyte.animatednavbar.animation.indendshape.shapeCornerRadius
 import com.exyte.animatednavbar.utils.noRippleClickable
-import com.nikolaej.cacademy.R
 import com.nikolaej.cacademy.data.items
 import com.nikolaej.cacademy.dataSQL.LessonViewModel
 import com.nikolaej.cacademy.ui.screen.LessonScreen
@@ -71,15 +71,14 @@ import com.nikolaej.cacademy.ui.screen.ProgressScreeen
 import com.nikolaej.cacademy.ui.screen.SettingsScreen
 import com.nikolaej.cacademy.ui.theme.CAcademyTheme
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.collectIndexed
 import kotlinx.coroutines.launch
 
-enum class MainScreen(@StringRes val title: Int) {
-    Start(title = R.string.tem),
-    Module(title = R.string.module),
-    Settings(title = R.string.settings),
-    Progress(title = R.string.progress),
-    Lesson(title = R.string.lesson)
+enum class MainScreen {
+    Start,
+    Module,
+    Settings,
+    Progress,
+    Lesson
 }
 
 
@@ -92,10 +91,9 @@ fun ScreenApp(
 
     val module by viewModel.getAll().collectAsState(emptyList())
 
+
     val navBackStackEntry by navController.currentBackStackEntryAsState() //получаем в текстовом виде название страницы
-    val currentScreen = MainScreen.valueOf(
-        navBackStackEntry?.destination?.route ?: MainScreen.Start.name
-    )
+
 
     val drawerState =
         rememberDrawerState(initialValue = DrawerValue.Closed) // по умолчанию окно боковой навигации скрыто
@@ -159,16 +157,24 @@ fun ScreenApp(
 
     ) {
         Scaffold(
-            modifier = Modifier.padding(start = 12.dp, top = 0.dp, end = 12.dp, bottom = 12.dp),
+
             topBar = {
                 //верхняя информационная панель, отсюда вызывается глобальное меню в приложении
-                Beautiful_app_bar(
-                    drawerState = drawerState,
-                    scope = scope,
-                    currentScreenTitle = currentScreen.title,
-                    navBackStackEntry = navBackStackEntry,
-                    navController = navController
-                )
+                if(navBackStackEntry?.destination?.route != "Lesson") {
+                    Beautiful_app_bar(
+                        drawerState = drawerState,
+                        scope = scope,
+                        currentScreenTitle = when (navBackStackEntry?.destination?.route) {
+                            "Start" -> "Уроки"
+                            "Module" -> "Модули"
+                            "Settings" -> "Настройки"
+                            "Progress" -> "Прогресс"
+                            else -> ""
+                        },
+                        navBackStackEntry = navBackStackEntry,
+                        navController = navController
+                    )
+                }
             },
             //нижняя панель навигации( по курсам и урокам )
             bottomBar = {
@@ -191,18 +197,26 @@ fun ScreenApp(
             NavHost(
                 navController = navController,
                 startDestination = MainScreen.Module.name,
-                modifier = Modifier
-                    .padding(paddingValues)
+                modifier = when(navBackStackEntry?.destination?.route) {
+                    "Module" -> Modifier.padding(paddingValues)
+                    "Start" -> Modifier.padding(paddingValues)
+                    "Settings" -> Modifier.padding(paddingValues)
+                    "Progress" -> Modifier.padding(paddingValues)
+                    else -> Modifier.padding(paddingValues)
+                }
+
+
+
             ) {
 
 
                 //экран модулей
                 composable(route = MainScreen.Module.name) {
+                    gameviewModel.selectedIndex = 0
                     ModuleScreen(
                         module = module,
-                        onModuleClick = {
-                            navController.navigate(MainScreen.Start.name)
-                        }
+                        nameModule = gameviewModel,
+                        navController = navController
                     )
                 }
 
@@ -211,11 +225,15 @@ fun ScreenApp(
                 composable(
                     route = MainScreen.Start.name
                 ) {
+
+                    val routelesson by viewModel.getLesson(nameLesson = gameviewModel.nameModule)
+                        .collectAsState(emptyList())
                     gameviewModel.selectedIndex = 1
-                    //val nameL by viewModel.getLesson().collectAsState(initial = emptyList())
                     LessonScreenCard(
-                        //lesson = nameL
+                        lesson = routelesson,
+                        navController = navController
                     )
+
                 }
 
                 //экран прогресса
@@ -236,17 +254,12 @@ fun ScreenApp(
 }
 
 
-fun comp(navController: NavHostController){
-
-}
-
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun Beautiful_app_bar(
     drawerState: DrawerState,
     scope: CoroutineScope,
-    @StringRes currentScreenTitle: Int,
+    currentScreenTitle: String,
     navBackStackEntry: NavBackStackEntry?,
     navController: NavHostController
 ) {
@@ -255,7 +268,7 @@ private fun Beautiful_app_bar(
     //верхняя панель
     TopAppBar(
         title = {
-            Text(text = stringResource(currentScreenTitle))
+            Text(text = currentScreenTitle)
         },
         //что делает кнопка
         navigationIcon = {
@@ -283,8 +296,8 @@ private fun Beautiful_app_bar(
             }
         },
         scrollBehavior = scrollBehavior,
-        colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = MaterialTheme.colorScheme.primary),
-        modifier = Modifier.clip(shape = RoundedCornerShape(15.dp)),
+        colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = colorScheme.secondaryContainer),
+        modifier = Modifier.clip(shape = RoundedCornerShape(0.dp, 0.dp, 15.dp, 15.dp)),
     )
 }
 
@@ -294,13 +307,14 @@ private fun Very_beautiful_control_panel(
     navController: NavHostController,
     gameviewModel: CAcademyViewModel
 ) {
+
     AnimatedNavigationBar(
-        modifier = Modifier.height(70.dp),
+        modifier = Modifier.height(75.dp),
         selectedIndex = gameviewModel.selectedIndex,
-        cornerRadius = shapeCornerRadius(cornerRadius = 25.dp),
+        cornerRadius = shapeCornerRadius(30.dp, 30.dp, 0.dp, 0.dp),
         ballAnimation = Parabolic(tween(600)),
-        barColor = MaterialTheme.colorScheme.primary,
-        ballColor = MaterialTheme.colorScheme.primary,
+        barColor = colorScheme.secondaryContainer,
+        ballColor = colorScheme.secondaryContainer,
         indentAnimation = Height(tween(300)),
 
         ) {
@@ -310,7 +324,6 @@ private fun Very_beautiful_control_panel(
                 .fillMaxSize()
                 .noRippleClickable {
                     if (gameviewModel.selectedIndex != 0) {
-                        gameviewModel.selectedIndex = 0
                         navController.popBackStack(MainScreen.Module.name, inclusive = false)
                     }
                 },
@@ -319,7 +332,7 @@ private fun Very_beautiful_control_panel(
             Icon(
                 imageVector = Icons.Default.Book,
                 contentDescription = null,
-                modifier = Modifier.size(27.dp)
+                modifier = Modifier.size(30.dp)
             )
 
         }
@@ -329,7 +342,6 @@ private fun Very_beautiful_control_panel(
                 .fillMaxSize()
                 .noRippleClickable {
                     if (gameviewModel.selectedIndex != 1) {
-                        gameviewModel.selectedIndex = 1
                         navController.navigate(MainScreen.Start.name)
                     }
                 },
@@ -338,9 +350,11 @@ private fun Very_beautiful_control_panel(
             Icon(
                 imageVector = Icons.Default.AccountBalance,
                 contentDescription = null,
-                modifier = Modifier.size(27.dp)
+                modifier = Modifier.size(30.dp)
             )
         }
+
+
     }
 }
 
