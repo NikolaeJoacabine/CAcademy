@@ -1,12 +1,11 @@
 package com.nikolaej.cacademy.lessonLevel
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,37 +18,55 @@ import com.nikolaej.cacademy.ui.theme.CAcademyTheme
 
 @Composable
 fun Lesson1Theory() {
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
+    LazyColumn(modifier = Modifier
+        .fillMaxSize()
+        .padding(horizontal = 8.dp)) {
         item {
-            Text(text = stringResource(R.string.Lesson1Theory1), fontWeight = FontWeight.Bold)
-            Spacer(modifier = Modifier.size(4.dp))
+            Text(text = stringResource(R.string.Lesson1Theory1), fontWeight = FontWeight.Bold, style = MaterialTheme.typography.bodyLarge)
 
 
-            Text(text = stringResource(R.string.Lesson1Theory2))
+
+            Text(
+                text = stringResource(R.string.Lesson1Theory2),
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.padding(start = 8.dp)
+            )
             Spacer(modifier = Modifier.size(8.dp))
 
 
             Text(text = stringResource(R.string.Lesson1Theory3), fontWeight = FontWeight.Bold)
-            Spacer(modifier = Modifier.size(4.dp))
 
 
-            Text(text = stringResource(R.string.Lesson1Theory4))
+
+            Text(
+                text = stringResource(R.string.Lesson1Theory4),
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.padding(start = 8.dp)
+            )
             Spacer(modifier = Modifier.size(8.dp))
 
 
             Text(text = stringResource(R.string.Lesson1Theory5), fontWeight = FontWeight.Bold)
-            Spacer(modifier = Modifier.size(4.dp))
 
 
-            Text(text = stringResource(R.string.Lesson1Theory6))
+
+            Text(
+                text = stringResource(R.string.Lesson1Theory6),
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.padding(start = 8.dp)
+            )
             Spacer(modifier = Modifier.size(8.dp))
 
 
             Text(text = stringResource(R.string.Lesson1Theory7), fontWeight = FontWeight.Bold)
-            Spacer(modifier = Modifier.size(4.dp))
 
 
-            Text(text = stringResource(R.string.Lesson1Theory8))
+
+            Text(
+                text = stringResource(R.string.Lesson1Theory8),
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.padding(start = 8.dp)
+            )
             Spacer(modifier = Modifier.size(8.dp))
         }
     }
