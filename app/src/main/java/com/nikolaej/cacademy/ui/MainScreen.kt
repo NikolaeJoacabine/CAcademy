@@ -178,8 +178,8 @@ fun ScreenApp(
                             || navBackStackEntry?.destination?.route == "Module",
                     enter = fadeIn(tween(800)) + slideInVertically(tween(600),
                         initialOffsetY = { fullHeight -> fullHeight }),
-                    exit = fadeOut(tween(800)) + slideOutVertically(
-                        tween(600),
+                    exit = fadeOut(tween(400)) + slideOutVertically(
+                        tween(300),
                         targetOffsetY = { fullHeight -> fullHeight })
                 ) {
                     Very_beautiful_control_panel(navController, gameviewModel)

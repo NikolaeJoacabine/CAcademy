@@ -31,6 +31,8 @@ data class Lesson(
     @ColumnInfo(name = "passTheTask")
     val passTheTask: Boolean,
 
+    @ColumnInfo(name = "Yes")
+    val Yes: Boolean
 
 )
 
