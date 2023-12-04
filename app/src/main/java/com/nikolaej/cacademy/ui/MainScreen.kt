@@ -8,10 +8,13 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBalance
@@ -37,6 +40,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -59,6 +64,7 @@ import com.exyte.animatednavbar.animation.indendshape.shapeCornerRadius
 import com.exyte.animatednavbar.utils.noRippleClickable
 import com.nikolaej.cacademy.data.items
 import com.nikolaej.cacademy.dataSQL.LessonViewModel
+import com.nikolaej.cacademy.ui.screen.FinishScreen
 import com.nikolaej.cacademy.ui.screen.LessonScreen
 import com.nikolaej.cacademy.ui.screen.LessonScreenCard
 import com.nikolaej.cacademy.ui.screen.ModuleScreen
@@ -73,7 +79,8 @@ enum class MainScreen {
     Module,
     Settings,
     Progress,
-    Lesson
+    Lesson,
+    Finish
 }
 
 
@@ -151,11 +158,14 @@ fun ScreenApp(
 
 
     ) {
+
+
+
         Scaffold(
 
             topBar = {
                 //верхняя информационная панель, отсюда вызывается глобальное меню в приложении
-                if(navBackStackEntry?.destination?.route != "Lesson") {
+
                     Beautiful_app_bar(
                         drawerState = drawerState,
                         scope = scope,
@@ -167,26 +177,19 @@ fun ScreenApp(
                             else -> ""
                         },
                         navBackStackEntry = navBackStackEntry,
-                        navController = navController
+                        navController = navController,
+                        gameviewModel = gameviewModel
                     )
-                }
             },
             //нижняя панель навигации( по курсам и урокам )
             bottomBar = {
-                AnimatedVisibility(
-                    navBackStackEntry?.destination?.route == "Start"
-                            || navBackStackEntry?.destination?.route == "Module",
-                    enter = fadeIn(tween(800)) + slideInVertically(tween(600),
-                        initialOffsetY = { fullHeight -> fullHeight }),
-                    exit = fadeOut(tween(400)) + slideOutVertically(
-                        tween(300),
-                        targetOffsetY = { fullHeight -> fullHeight })
-                ) {
                     Very_beautiful_control_panel(navController, gameviewModel)
-                }
             }
         ) { paddingValues ->
 
+
+
+            val paddingValue = WindowInsets.systemBars.asPaddingValues()
 
             //навигация по всему приложению
             NavHost(
@@ -195,9 +198,9 @@ fun ScreenApp(
                 modifier = when(navBackStackEntry?.destination?.route) {
                     "Module" -> Modifier.padding(paddingValues)
                     "Start" -> Modifier.padding(paddingValues)
-                    "Settings" -> Modifier.padding(paddingValues)
-                    "Progress" -> Modifier.padding(paddingValues)
-                    else -> Modifier.padding(paddingValues)
+                    "Settings" -> Modifier.padding(top = paddingValues.calculateTopPadding(), bottom = 0.dp)
+                    "Progress" -> Modifier.padding(top = paddingValues.calculateTopPadding(), bottom = 0.dp)
+                    else -> Modifier.padding(top = paddingValue.calculateTopPadding(), bottom = 0.dp)
                 }
 
 
@@ -207,6 +210,8 @@ fun ScreenApp(
 
                 //экран модулей
                 composable(route = MainScreen.Module.name) {
+                    gameviewModel.bottomBarState = true
+                    gameviewModel.topBarState = true
                     gameviewModel.selectedIndex = 0
                     ModuleScreen(
                         module = module,
@@ -220,27 +225,42 @@ fun ScreenApp(
                 composable(
                     route = MainScreen.Start.name
                 ) {
-
+                    gameviewModel.bottomBarState = true
+                    gameviewModel.topBarState = true
                     val routelesson by viewModel.getLesson(nameLesson = gameviewModel.nameModule)
                         .collectAsState(emptyList())
                     gameviewModel.selectedIndex = 1
                     LessonScreenCard(
                         lesson = routelesson,
-                        navController = navController
+                        navController = navController,
+                        viewModel = gameviewModel
                     )
 
                 }
 
                 //экран прогресса
                 composable(route = MainScreen.Progress.name) {
+                    gameviewModel.bottomBarState = true
+                    gameviewModel.topBarState = false
                     ProgressScreeen()
                 }
                 //экран настроек
                 composable(route = MainScreen.Settings.name) {
+                    gameviewModel.bottomBarState = true
+                    gameviewModel.topBarState = false
                     SettingsScreen()
                 }
                 composable(route = MainScreen.Lesson.name) {
-                    LessonScreen()
+                    gameviewModel.bottomBarState = false
+                    gameviewModel.topBarState = false
+                    LessonScreen(lessonName = gameviewModel.namelesson,
+                        navController = navController)
+                }
+
+                composable(route = MainScreen.Finish.name){
+                    gameviewModel.bottomBarState = false
+                    gameviewModel.topBarState = false
+                    FinishScreen(navController = navController)
                 }
 
             }
@@ -256,100 +276,122 @@ private fun Beautiful_app_bar(
     scope: CoroutineScope,
     currentScreenTitle: String,
     navBackStackEntry: NavBackStackEntry?,
-    navController: NavHostController
+    navController: NavHostController,
+    gameviewModel: CAcademyViewModel
 ) {
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-    //верхняя панель
-    TopAppBar(
-        title = {
-            Text(text = currentScreenTitle)
-        },
-        //что делает кнопка
-        navigationIcon = {
-            IconButton(onClick = {
-                if (navBackStackEntry?.destination?.route == "Start" || navBackStackEntry?.destination?.route == "Module") {
-                    scope.launch {
-                        drawerState.open()
+
+
+    AnimatedVisibility(
+        gameviewModel.bottomBarState,
+        enter = fadeIn(tween(800)) + slideInVertically(tween(600),
+            initialOffsetY = { fullHeight -> -fullHeight }),
+        exit = fadeOut(tween(800)) + slideOutVertically(
+            tween(600),
+            targetOffsetY = { fullHeight -> -fullHeight })
+        ) {
+        //верхняя панель
+        TopAppBar(
+            title = {
+                Text(text = currentScreenTitle)
+            },
+            //что делает кнопка
+            navigationIcon = {
+                IconButton(onClick = {
+                    if (navBackStackEntry?.destination?.route == "Start" || navBackStackEntry?.destination?.route == "Module") {
+                        scope.launch {
+                            drawerState.open()
+                        }
+                    } else {
+                        navController.popBackStack(MainScreen.Module.name, inclusive = false)
+
                     }
-                } else {
-                    navController.popBackStack(MainScreen.Module.name, inclusive = false)
+                }
+                ) {
+                    if (navBackStackEntry?.destination?.route == "Start" || navBackStackEntry?.destination?.route == "Module") {
+                        Icon(
+                            imageVector = Icons.Default.Menu, contentDescription = null
+                        )
+                    } else {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack, contentDescription = null
+                        )
+                    }
 
                 }
-            }
-            ) {
-                if (navBackStackEntry?.destination?.route == "Start" || navBackStackEntry?.destination?.route == "Module") {
-                    Icon(
-                        imageVector = Icons.Default.Menu, contentDescription = null
-                    )
-                } else {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack, contentDescription = null
-                    )
-                }
-
-            }
-        },
-        scrollBehavior = scrollBehavior,
-        colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = colorScheme.secondaryContainer),
-        modifier = Modifier.clip(shape = RoundedCornerShape(0.dp, 0.dp, 15.dp, 15.dp)),
-    )
+            },
+            scrollBehavior = scrollBehavior,
+            colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = colorScheme.secondaryContainer),
+            modifier = Modifier.clip(shape = RoundedCornerShape(0.dp, 0.dp, 15.dp, 15.dp)),
+        )
+    }
 }
 
 //анимированная панель в приложении
 @Composable
 private fun Very_beautiful_control_panel(
     navController: NavHostController,
-    gameviewModel: CAcademyViewModel
+    gameviewModel: CAcademyViewModel,
+
 ) {
 
-    AnimatedNavigationBar(
-        modifier = Modifier.height(75.dp),
-        selectedIndex = gameviewModel.selectedIndex,
-        cornerRadius = shapeCornerRadius(30.dp, 30.dp, 0.dp, 0.dp),
-        ballAnimation = Parabolic(tween(600)),
-        barColor = colorScheme.secondaryContainer,
-        ballColor = colorScheme.secondaryContainer,
-        indentAnimation = Height(tween(300)),
+    AnimatedVisibility(
+        visible = gameviewModel.topBarState,
+        enter = fadeIn(tween(800)) + slideInVertically(tween(600),
+            initialOffsetY = { fullHeight -> fullHeight }),
+        exit = fadeOut(tween(800)) + slideOutVertically(
+            tween(600),
+            targetOffsetY = { fullHeight -> fullHeight })
+    ) {
+        AnimatedNavigationBar(
+            modifier = Modifier.height(75.dp),
+            selectedIndex = gameviewModel.selectedIndex,
+            cornerRadius = shapeCornerRadius(30.dp, 30.dp, 0.dp, 0.dp),
+            ballAnimation = Parabolic(tween(600)),
+            barColor = colorScheme.secondaryContainer,
+            ballColor = colorScheme.secondaryContainer,
+            indentAnimation = Height(tween(300)),
 
-        ) {
+            ) {
 
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .noRippleClickable {
-                    if (gameviewModel.selectedIndex != 0) {
-                        navController.popBackStack(MainScreen.Module.name, inclusive = false)
-                    }
-                },
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                imageVector = Icons.Default.Book,
-                contentDescription = null,
-                modifier = Modifier.size(30.dp)
-            )
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .noRippleClickable {
+                        if (gameviewModel.selectedIndex != 0) {
+                            navController.popBackStack(MainScreen.Module.name, inclusive = false)
+                        }
+                    },
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Book,
+                    contentDescription = null,
+                    modifier = Modifier.size(30.dp)
+                )
+
+            }
+
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .noRippleClickable {
+                        if (gameviewModel.selectedIndex != 1) {
+                            navController.navigate(MainScreen.Start.name)
+                        }
+                    },
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = Icons.Default.AccountBalance,
+                    contentDescription = null,
+                    modifier = Modifier.size(30.dp)
+                )
+            }
+
 
         }
-
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .noRippleClickable {
-                    if (gameviewModel.selectedIndex != 1) {
-                        navController.navigate(MainScreen.Start.name)
-                    }
-                },
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                imageVector = Icons.Default.AccountBalance,
-                contentDescription = null,
-                modifier = Modifier.size(30.dp)
-            )
-        }
-
-
     }
 }
 

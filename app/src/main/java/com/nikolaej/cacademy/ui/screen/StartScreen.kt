@@ -41,6 +41,7 @@ import androidx.navigation.NavController
 import com.exyte.animatednavbar.utils.noRippleClickable
 import com.nikolaej.cacademy.R
 import com.nikolaej.cacademy.dataSQL.Lesson
+import com.nikolaej.cacademy.ui.CAcademyViewModel
 import com.nikolaej.cacademy.ui.MainScreen
 import java.sql.Driver
 
@@ -50,7 +51,8 @@ import java.sql.Driver
 
 fun LessonScreenCard(
     lesson: List<Lesson>,
-    navController: NavController
+    navController: NavController,
+    viewModel: CAcademyViewModel
 ) {
     var isSheetOpen by rememberSaveable {
         mutableStateOf(false)
@@ -127,13 +129,14 @@ fun LessonScreenCard(
                             if (pass) {
                                 isSheetOpen = false
                                 navController.navigate(MainScreen.Lesson.name)
+                                viewModel.namelesson = text
                             } else {
                                 pass1 = false
                             }
                         },
                     ) {
                         Text(
-                            text = "Начать урок",
+                            text = "Начать урок"
                         )
                     }
                 }

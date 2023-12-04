@@ -1,24 +1,32 @@
 package com.nikolaej.cacademy.lessonLevel
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.nikolaej.cacademy.R
+import com.nikolaej.cacademy.ui.MainScreen
 import com.nikolaej.cacademy.ui.screen.LessonViewModel
 
 @Composable
@@ -84,20 +92,22 @@ fun Lesson1Theory() {
 }
 
 @Composable
-fun Lesson1Practice(viewModel: LessonViewModel) {
+fun Lesson1Practice(viewModel: LessonViewModel, navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 8.dp)
+            .padding(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
-
+        Text(text = "Для этой темы нет заданий, вы можете пройти дальше 😉")
         Button(onClick = {
-            viewModel.progress += 0.2f
-            if (viewModel.progress > 1f) {
-                viewModel.progress = 0f
+            viewModel.progress += 1f
+            if(viewModel.progress == 1f) {
+                navController.navigate(MainScreen.Finish.name)
             }
         }) {
-            Text(text = "привет")
+            Text(text = "Закончить урок")
         }
     }
 }
