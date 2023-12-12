@@ -12,6 +12,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.exyte.animatednavbar.utils.noRippleClickable
@@ -53,6 +55,7 @@ fun ModuleCard(
     nameModule: CAcademyViewModel,
     navController: NavHostController
 ) {
+    val haptic = LocalHapticFeedback.current
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -60,6 +63,7 @@ fun ModuleCard(
             .noRippleClickable  {
                 nameModule.nameModule = name
                 navController.navigate(MainScreen.Start.name)
+                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
              }
     ) {
         Text(

@@ -51,6 +51,8 @@ interface LessonDao{
         """
     )
     fun getAllLesson(nameModule: String): Flow<List<Lesson>>
+
+
 }
 
 @Database(entities = arrayOf(Lesson::class), version = 1)

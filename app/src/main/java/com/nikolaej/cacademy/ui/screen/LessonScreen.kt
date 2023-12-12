@@ -140,7 +140,7 @@ fun LessonScreen(
             Row(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(0.dp)
+                modifier = Modifier.padding(end = 8.dp)
             ) {
                 IconButton(onClick = { pass = true }) {
                     Icon(imageVector = Icons.Default.Clear, contentDescription = null)
@@ -151,6 +151,7 @@ fun LessonScreen(
                         .fillMaxWidth()
                         .height(16.dp)
                         .clip(RoundedCornerShape(8.dp))
+
                 )
             }
 
