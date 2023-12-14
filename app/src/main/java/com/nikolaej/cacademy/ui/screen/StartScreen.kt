@@ -27,7 +27,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -106,11 +108,14 @@ fun LessonScreenCard(
     }
 
 
+
     if (isSheetOpen) {
-        dialog2(
-            onCancel = { isSheetOpen = false },
+        DialogWithImage(
+            onDismissRequest = { isSheetOpen = false },
+            onConfirmation = { },
             text = text,
-            navController = navController
+            navController = navController,
+            vieweModel = viewModel
         )
     }
 
@@ -139,39 +144,53 @@ fun Dialog(
             }
         },
         confirmButton = {
-
         }
     )
 }
 
 
 @Composable
-fun dialog2(
-    onCancel: () -> Unit,
+fun DialogWithImage(
+    onDismissRequest: () -> Unit,
+    onConfirmation: () -> Unit,
     text: String,
-    navController: NavController
+    navController: NavController,
+    vieweModel: CAcademyViewModel
 ) {
-    androidx.compose.ui.window.Dialog(onDismissRequest = { onCancel() }) {
+    androidx.compose.ui.window.Dialog(onDismissRequest = { onDismissRequest() }) {
+
         Card(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
                 .padding(16.dp),
-            shape = RoundedCornerShape(16.dp)
+            shape = RoundedCornerShape(16.dp),
         ) {
-            Text(
-                text = text,
+            Column(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .wrapContentSize(Alignment.Center),
-                textAlign = TextAlign.Center,
-            )
-            Button(onClick = {
-                onCancel()
-                navController.navigate(MainScreen.Lesson.name)
-            }
+                    .fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Text(text = "Начать практиковаться")
+
+                Text(
+                    text = text,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(16.dp),
+                )
+
+                OutlinedButton(
+                    onClick = {
+                        onDismissRequest()
+                        vieweModel.namelesson = text
+                        navController.navigate(MainScreen.Lesson.name)
+                    },
+                    modifier = Modifier.padding(bottom = 8.dp),
+                ) {
+                    Text("Начать практиковаться")
+                }
+
+
             }
         }
     }

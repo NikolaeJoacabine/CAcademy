@@ -217,7 +217,7 @@ fun ScreenApp(
 
             ) {
 
-                systemUiController.isNavigationBarVisible = false
+                //systemUiController.isNavigationBarVisible = false
 
 
                 //экран модулей
