@@ -7,6 +7,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
@@ -50,6 +51,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
@@ -62,6 +66,8 @@ import com.exyte.animatednavbar.animation.balltrajectory.Parabolic
 import com.exyte.animatednavbar.animation.indendshape.Height
 import com.exyte.animatednavbar.animation.indendshape.shapeCornerRadius
 import com.exyte.animatednavbar.utils.noRippleClickable
+import com.google.accompanist.systemuicontroller.SystemUiController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.nikolaej.cacademy.data.items
 import com.nikolaej.cacademy.dataSQL.LessonViewModel
 import com.nikolaej.cacademy.ui.screen.FinishScreen
@@ -91,8 +97,10 @@ fun ScreenApp(
     navController: NavHostController = rememberNavController()
 ) {
 
+
     val module by viewModel.getAll().collectAsState(emptyList())
 
+    val paddingValue = WindowInsets.systemBars.asPaddingValues()
 
     val navBackStackEntry by navController.currentBackStackEntryAsState() //получаем в текстовом виде название страницы
 
@@ -101,6 +109,8 @@ fun ScreenApp(
         rememberDrawerState(initialValue = DrawerValue.Closed) // по умолчанию окно боковой навигации скрыто
     val scope = rememberCoroutineScope()
     var selectedItemIndex by rememberSaveable { mutableIntStateOf(0) }
+
+
 
     //боковое меню навигации в самом приложении
     ModalNavigationDrawer(
@@ -183,13 +193,13 @@ fun ScreenApp(
             },
             //нижняя панель навигации( по курсам и урокам )
             bottomBar = {
-                    Very_beautiful_control_panel(navController, gameviewModel)
+                    Very_beautiful_control_panel(navController, gameviewModel, paddingValue)
             }
         ) { paddingValues ->
 
 
 
-            val paddingValue = WindowInsets.systemBars.asPaddingValues()
+            val systemUiController = rememberSystemUiController()
 
             //навигация по всему приложению
             NavHost(
@@ -206,6 +216,8 @@ fun ScreenApp(
 
 
             ) {
+
+                systemUiController.isNavigationBarVisible = false
 
 
                 //экран модулей
@@ -333,6 +345,7 @@ private fun Beautiful_app_bar(
 private fun Very_beautiful_control_panel(
     navController: NavHostController,
     gameviewModel: CAcademyViewModel,
+    ppp: PaddingValues
 
 ) {
 
@@ -345,7 +358,7 @@ private fun Very_beautiful_control_panel(
             targetOffsetY = { fullHeight -> fullHeight })
     ) {
         AnimatedNavigationBar(
-            modifier = Modifier.height(75.dp),
+            modifier = Modifier.height(75.dp + ppp.calculateBottomPadding()),
             selectedIndex = gameviewModel.selectedIndex,
             cornerRadius = shapeCornerRadius(30.dp, 30.dp, 0.dp, 0.dp),
             ballAnimation = Parabolic(tween(600)),

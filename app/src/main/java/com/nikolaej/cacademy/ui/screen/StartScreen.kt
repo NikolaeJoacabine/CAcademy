@@ -1,10 +1,12 @@
 package com.nikolaej.cacademy.ui.screen
 
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
@@ -27,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.exyte.animatednavbar.utils.noRippleClickable
@@ -35,7 +38,6 @@ import com.nikolaej.cacademy.ui.CAcademyViewModel
 import com.nikolaej.cacademy.ui.MainScreen
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 
 fun LessonScreenCard(
@@ -47,7 +49,6 @@ fun LessonScreenCard(
     var isSheetOpen by rememberSaveable {
         mutableStateOf(false)
     }
-    val sheetState = rememberModalBottomSheetState()
 
     var text by rememberSaveable {
         mutableStateOf("")
@@ -77,7 +78,7 @@ fun LessonScreenCard(
                         pass = module.passTheTask
                         haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                     },
-                border = when(module.Yes){
+                border = when (module.Yes) {
                     true -> BorderStroke(2.dp, MaterialTheme.colorScheme.primary)
                     else -> BorderStroke(0.dp, MaterialTheme.colorScheme.secondaryContainer)
                 }
@@ -90,7 +91,7 @@ fun LessonScreenCard(
                 ) {
                     Text(
                         text = module.nameLesson, modifier = Modifier.weight(10f),
-                        color = when(module.Yes){
+                        color = when (module.Yes) {
                             true -> MaterialTheme.colorScheme.primary
                             else -> MaterialTheme.colorScheme.onSurfaceVariant
                         }
@@ -105,50 +106,22 @@ fun LessonScreenCard(
     }
 
 
-
     if (isSheetOpen) {
-        ModalBottomSheet(
-            sheetState = sheetState,
-            onDismissRequest = {
-                isSheetOpen = false
-            }
-        ) {
-            Column(
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = text,
-                    modifier = Modifier.padding(start = 10.dp)
-                )
-                Row(modifier = Modifier.padding(start = 10.dp)) {
-                    Spacer(modifier = Modifier.weight(1f))
-                    OutlinedButton(
-                        onClick = {
-                            if (pass) {
-                                isSheetOpen = false
-                                navController.navigate(MainScreen.Lesson.name)
-                                viewModel.namelesson = text
-                            } else {
-                                pass1 = false
-                            }
-                        },
-                    ) {
-                        Text(
-                            text = "Начать урок"
-                        )
-                    }
-                }
-            }
-        }
+        dialog2(
+            onCancel = { isSheetOpen = false },
+            text = text,
+            navController = navController
+        )
+    }
 
-        if (!pass1) {
-            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-            Dialog(onCancel = {
-                pass1 = true
-                isSheetOpen = false
-            }
-            )
+
+
+    if (!pass1) {
+        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+        Dialog(onCancel = {
+            pass1 = true
         }
+        )
     }
 }
 
@@ -157,7 +130,7 @@ fun LessonScreenCard(
 fun Dialog(
     onCancel: () -> Unit,
 ) {
-    AlertDialog(onDismissRequest = { /* Do nothing */ },
+    AlertDialog(onDismissRequest = { },
         title = { Text("Ой!") },
         text = { Text("Вы не прошли предыдущие уроки") },
         dismissButton = {
@@ -170,5 +143,42 @@ fun Dialog(
         }
     )
 }
+
+
+@Composable
+fun dialog2(
+    onCancel: () -> Unit,
+    text: String,
+    navController: NavController
+) {
+    androidx.compose.ui.window.Dialog(onDismissRequest = { onCancel() }) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp)
+                .padding(16.dp),
+            shape = RoundedCornerShape(16.dp)
+        ) {
+            Text(
+                text = text,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .wrapContentSize(Alignment.Center),
+                textAlign = TextAlign.Center,
+            )
+            Button(onClick = {
+                onCancel()
+                navController.navigate(MainScreen.Lesson.name)
+            }
+            ) {
+                Text(text = "Начать практиковаться")
+            }
+        }
+    }
+}
+
+
+
+
 
 
