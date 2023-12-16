@@ -1,41 +1,47 @@
 package com.nikolaej.cacademy.ui.screen
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.modifier.modifierLocalConsumer
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun SettingsScreen() {
-    cardSettings()
-
-}
-
-@Composable
-private fun cardSettings() {
-    var hh by remember {
-        mutableStateOf(false)
-    }
-
-    Column(modifier = Modifier.padding(horizontal = 8.dp, vertical = 10.dp)) {
-        Row {
-            Text(text = "Тёмная тема", Modifier.padding(8.dp))
+fun SettingsScreen(
+    darkTheme: Boolean,
+    onClick: () -> Unit
+) {
+    val haptic = LocalHapticFeedback.current
+    Column(modifier = Modifier.fillMaxSize()) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp, vertical = 8.dp),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = "Тёмная тема")
             Spacer(modifier = Modifier.weight(1f))
-            Switch(checked = hh, onCheckedChange = {
-                hh = it
-            }
-            )
+            Switch(checked = darkTheme, onCheckedChange = {
+                onClick()
+                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+            })
         }
     }
 
 }
+
+
