@@ -1,24 +1,17 @@
 package com.nikolaej.cacademy.lessonLevel
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -26,8 +19,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.nikolaej.cacademy.R
-import com.nikolaej.cacademy.ui.MainScreen
-import com.nikolaej.cacademy.ui.screen.LessonViewModel
+
+import com.nikolaej.cacademy.ui.CAcademyViewModel
+import com.nikolaej.cacademy.ui.screen.FinishDestination
+import com.nikolaej.cacademy.ui.screen.LessonDestination
+
+import com.nikolaej.cacademy.ui.screen.LessonScreenViewModel
+import kotlinx.coroutines.coroutineScope
 
 @Composable
 fun Lesson1Theory() {
@@ -92,7 +90,11 @@ fun Lesson1Theory() {
 }
 
 @Composable
-fun Lesson1Practice(viewModel: LessonViewModel, navController: NavController) {
+fun Lesson1Practice(
+    viewModel: LessonScreenViewModel,
+    navController: NavController,
+) {
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -102,9 +104,10 @@ fun Lesson1Practice(viewModel: LessonViewModel, navController: NavController) {
     ) {
         Text(text = "Для этой темы нет заданий, вы можете пройти дальше 😉")
         Button(onClick = {
+            viewModel.update(LessonDestination.idlesson+1, LessonDestination.idlesson)
             viewModel.progress += 1f
             if(viewModel.progress == 1f) {
-                navController.navigate(MainScreen.Finish.name)
+                navController.navigate(FinishDestination.route)
             }
         }) {
             Text(text = "Закончить урок")

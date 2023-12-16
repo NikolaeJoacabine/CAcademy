@@ -55,8 +55,16 @@ import com.nikolaej.cacademy.lessonLevel.Lesson1Practice
 import com.nikolaej.cacademy.lessonLevel.Lesson1Theory
 import com.nikolaej.cacademy.lessonLevel.Lesson2Practice
 import com.nikolaej.cacademy.lessonLevel.Lesson2Theory
-import com.nikolaej.cacademy.ui.MainScreen
+import com.nikolaej.cacademy.ui.AppViewModelProvider
+import com.nikolaej.cacademy.ui.CAcademyViewModel
+import com.nikolaej.cacademy.ui.navigation.NavigationDestination
 
+
+object LessonDestination : NavigationDestination {
+    override val route = "Lesson"
+    var nameLesson: String = ""
+    var idlesson: Int = 0
+}
 
 data class TabItem(
     val name: String
@@ -70,9 +78,8 @@ val tabItem = listOf(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun LessonScreen(
-    viewModel: LessonViewModel = viewModel(),
-    lessonName: String,
-    navController: NavController
+    viewModel: LessonScreenViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    navController: NavController,
 ) {
 
     var pass by rememberSaveable {
@@ -161,7 +168,7 @@ fun LessonScreen(
             Dialog(
                 onCancel = {
                     pass = false
-                    navController.popBackStack(MainScreen.Start.name, inclusive = false)
+                    navController.popBackStack(LessonsDestination.route, inclusive = false)
                 },
                 onYes = {
                     pass = false
@@ -175,7 +182,7 @@ fun LessonScreen(
                 .fillMaxWidth()
                 .weight(1f)
         ) {
-            when (lessonName) {
+            when (LessonDestination.nameLesson) {
                 "Что такое программирование?" -> when (it) {
                     0 -> Lesson1Theory()
                     1 -> Lesson1Practice(viewModel, navController)

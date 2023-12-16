@@ -8,14 +8,16 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.ThumbUp
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.nikolaej.cacademy.ui.MainScreen
+import com.nikolaej.cacademy.ui.screen.LessonsDestination
+import com.nikolaej.cacademy.ui.screen.ProgressDestination
+import com.nikolaej.cacademy.ui.screen.SettingsDestination
 
 data class NavigationItem(
     val title: String,
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector,
     val badgeCount: Int? = null,
-    val nav: MainScreen
+    val nav: String
 )
 
 
@@ -25,18 +27,18 @@ val items = listOf(
         title = "Меню",
         selectedIcon = Icons.Filled.Home,
         unselectedIcon = Icons.Outlined.Home,
-        nav = MainScreen.Start
+        nav = LessonsDestination.route
     ),
     NavigationItem(
         title = "Настройки",
         selectedIcon = Icons.Filled.Settings,
         unselectedIcon = Icons.Outlined.Settings,
-        nav = MainScreen.Settings
+        nav = SettingsDestination.route
     ),
     NavigationItem(
-        title = "Ваши успехи:)",
+        title = "Ваши успехи",
         selectedIcon = Icons.Filled.ThumbUp,
         unselectedIcon = Icons.Outlined.ThumbUp,
-        nav = MainScreen.Progress
+        nav = ProgressDestination.route
     )
 )
