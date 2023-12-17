@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.nikolaej.cacademy.R
@@ -102,7 +103,7 @@ fun Lesson1Practice(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text(text = "Для этой темы нет заданий, вы можете пройти дальше 😉")
+        Text(text = "Для этой темы нет заданий, вы можете пройти дальше 😉", textAlign = TextAlign.Center)
         Button(onClick = {
             viewModel.update(LessonDestination.idlesson+1, LessonDestination.idlesson)
             viewModel.progress += 1f

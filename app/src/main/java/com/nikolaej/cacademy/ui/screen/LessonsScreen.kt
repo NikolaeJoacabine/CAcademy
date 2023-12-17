@@ -1,7 +1,6 @@
 package com.nikolaej.cacademy.ui.screen
 
 
-import android.graphics.Paint.Align
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -40,7 +39,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.exyte.animatednavbar.utils.noRippleClickable
-import com.nikolaej.cacademy.dataSQL.Lesson
 import com.nikolaej.cacademy.ui.AppViewModelProvider
 import com.nikolaej.cacademy.ui.CAcademyViewModel
 import com.nikolaej.cacademy.ui.navigation.NavigationDestination
@@ -82,63 +80,68 @@ fun LessonScreenCard(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text(text = "Вы не выбрали модуль, чтобы отобразить уроки", textAlign = TextAlign.Center)
+            Text(
+                text = "Вы не выбрали модуль, чтобы отобразить уроки",
+                textAlign = TextAlign.Center
+            )
         }
-    }
-    LazyColumn(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        items(
-            items = lessons.lessonList,
-            key = { lesson -> lesson.id }
-        ) { module ->
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp, vertical = 4.dp)
-                    .noRippleClickable {
-                        if (module.passTheTask) {
-                            isSheetOpen = true
-                        } else {
-                            pass1 = false
-                        }
-                        id = module.id
-                        text = module.nameLesson
-                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                    },
-                border = when (module.Yes) {
-                    true -> BorderStroke(2.dp, MaterialTheme.colorScheme.primary)
-                    else -> BorderStroke(0.dp, MaterialTheme.colorScheme.secondaryContainer)
-                }
-
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(horizontal = 8.dp)
-                ) {
-                    Text(
-                        text = module.nameLesson, modifier = Modifier.weight(10f),
-                        color = when (module.Yes) {
-                            true -> MaterialTheme.colorScheme.primary
-                            else -> MaterialTheme.colorScheme.onSurfaceVariant
-                        }
-                    )
-                    Spacer(modifier = Modifier.weight(1f))
-                    if (!module.passTheTask) {
-                        Icon(imageVector = Icons.Filled.Lock, contentDescription = null)
+    } else {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            items(
+                items = lessons.lessonList,
+                key = { lesson -> lesson.id }
+            ) { module ->
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp, vertical = 4.dp)
+                        .noRippleClickable {
+                            if (module.passTheTask) {
+                                isSheetOpen = true
+                            } else {
+                                pass1 = false
+                            }
+                            id = module.id
+                            text = module.nameLesson
+                            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                        },
+                    border = when (module.Yes) {
+                        true -> BorderStroke(2.dp, MaterialTheme.colorScheme.primary)
+                        else -> BorderStroke(0.dp, MaterialTheme.colorScheme.secondaryContainer)
                     }
-                    if (module.Yes) {
-                        Icon(
-                            imageVector = Icons.Default.Check,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary
+
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    ) {
+                        Text(
+                            text = module.nameLesson, modifier = Modifier.weight(10f),
+                            color = when (module.Yes) {
+                                true -> MaterialTheme.colorScheme.primary
+                                else -> MaterialTheme.colorScheme.onSurfaceVariant
+                            }
                         )
+                        Spacer(modifier = Modifier.weight(1f))
+                        if (!module.passTheTask) {
+                            Icon(imageVector = Icons.Filled.Lock, contentDescription = null)
+                        }
+                        if (module.Yes) {
+                            Icon(
+                                imageVector = Icons.Default.Check,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        }
                     }
                 }
             }
         }
     }
+
 
 
 

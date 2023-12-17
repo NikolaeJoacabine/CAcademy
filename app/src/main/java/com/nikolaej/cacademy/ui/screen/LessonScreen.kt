@@ -51,10 +51,136 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.nikolaej.cacademy.lessonLevel.Lesson10Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson10Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson11Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson11Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson12Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson12Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson13Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson13Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson14Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson14Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson15Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson15Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson16Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson16Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson17Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson17Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson18Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson18Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson19Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson19Theory
 import com.nikolaej.cacademy.lessonLevel.Lesson1Practice
 import com.nikolaej.cacademy.lessonLevel.Lesson1Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson20Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson20Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson21Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson21Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson22Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson22Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson23Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson23Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson24Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson24Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson25Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson25Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson26Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson26Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson27Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson27Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson28Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson28Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson29Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson29Theory
 import com.nikolaej.cacademy.lessonLevel.Lesson2Practice
 import com.nikolaej.cacademy.lessonLevel.Lesson2Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson30Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson30Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson31Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson31Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson32Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson32Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson33Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson33Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson34Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson34Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson35Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson35Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson36Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson36Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson37Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson37Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson38Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson38Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson39Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson39Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson3Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson3Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson40Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson40Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson41Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson41Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson42Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson42Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson43Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson43Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson44Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson44Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson45Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson45Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson46Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson46Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson47Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson47Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson48Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson48Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson49Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson49Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson4Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson4Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson50Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson50Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson51Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson51Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson52Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson52Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson53Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson53Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson54Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson54Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson55Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson55Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson56Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson56Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson57Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson57Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson58Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson58Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson59Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson59Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson5Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson5Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson60Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson60Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson61Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson61Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson62Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson62Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson63Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson63Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson64Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson64Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson65Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson65Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson6Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson6Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson7Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson7Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson8Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson8Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson9Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson9Theory
 import com.nikolaej.cacademy.ui.AppViewModelProvider
 import com.nikolaej.cacademy.ui.CAcademyViewModel
 import com.nikolaej.cacademy.ui.navigation.NavigationDestination
@@ -188,329 +314,324 @@ fun LessonScreen(
                     1 -> Lesson1Practice(viewModel, navController)
                 }
 
-                "История программирования" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
-                }
-
                 "Виды программирования" -> when (it) {
                     0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    1 -> Lesson2Practice(viewModel, navController)
                 }
 
-                "Программирование на C++" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                "Язык программирования C++" -> when (it) {
+                    0 -> Lesson3Theory()
+                    1 -> Lesson3Practice(viewModel, navController)
                 }
 
                 "Переменные" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson4Theory()
+                    1 -> Lesson4Practice()
                 }
 
                 "Типы данных" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson5Theory()
+                    1 -> Lesson5Practice()
                 }
 
                 "Константы" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson6Theory()
+                    1 -> Lesson6Practice()
                 }
 
                 "Ввод и вывод в консоли" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson7Theory()
+                    1 -> Lesson7Practice()
+                }
+
+                "using. Подключение пространств имен и определение псевдонимов" -> when (it) {
+                    0 -> Lesson8Theory()
+                    1 -> Lesson8Practice()
                 }
 
                 "Операторы присваивания" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson9Theory()
+                    1 -> Lesson9Practice()
                 }
 
                 "Арифметические операторы" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson10Theory()
+                    1 -> Lesson10Practice()
                 }
 
                 "Операторы сравнения" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson11Theory()
+                    1 -> Lesson11Practice()
                 }
 
                 "Логические операторы" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson12Theory()
+                    1 -> Lesson12Practice()
                 }
 
                 "конструкция if" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson13Theory()
+                    1 -> Lesson13Practice()
                 }
 
                 "конструкция switch" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson14Theory()
+                    1 -> Lesson14Practice()
                 }
 
                 "Цикл while" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson15Theory()
+                    1 -> Lesson15Practice()
                 }
 
                 "Цикл for" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson16Theory()
+                    1 -> Lesson16Practice()
                 }
 
                 "Цикл do..while" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson17Theory()
+                    1 -> Lesson17Practice()
                 }
 
                 "Операторы continue и break" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson18Theory()
+                    1 -> Lesson18Practice()
                 }
 
                 "Массивы" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson19Theory()
+                    1 -> Lesson19Practice()
                 }
 
                 "Многомерные массивы" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson20Theory()
+                    1 -> Lesson20Practice()
                 }
 
                 "Массивы символов" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson21Theory()
+                    1 -> Lesson21Practice()
                 }
 
                 "Ссылки" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson22Theory()
+                    1 -> Lesson22Practice()
                 }
 
                 "Указатели" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson23Theory()
+                    1 -> Lesson23Practice()
                 }
 
                 "Арифметика указателей" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson24Theory()
+                    1 -> Lesson24Practice()
                 }
 
                 "Определение и объявление" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson25Theory()
+                    1 -> Lesson25Practice()
                 }
 
                 "Область видимости объектов" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson26Theory()
+                    1 -> Lesson26Practice()
                 }
 
                 "Передача аргументов" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson27Theory()
+                    1 -> Lesson27Practice()
                 }
 
                 "Оператор return" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson28Theory()
+                    1 -> Lesson28Practice()
                 }
 
                 "Указатели в параметрах функций" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson29Theory()
+                    1 -> Lesson29Practice()
                 }
 
                 "Параметры функции main" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson30Theory()
+                    1 -> Lesson30Practice()
                 }
 
                 "Возвращение указателей и ссылок" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson31Theory()
+                    1 -> Lesson31Practice()
                 }
 
                 "Перегрузка функций" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson32Theory()
+                    1 -> Lesson32Practice()
                 }
 
                 "Рекурсивные функции" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson33Theory()
+                    1 -> Lesson33Practice()
                 }
 
                 "Указатели на функции" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson34Theory()
+                    1 -> Lesson34Practice()
                 }
 
                 "Указатели на функции как параметры" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson35Theory()
+                    1 -> Lesson35Practice()
                 }
 
                 "Тип функции" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson36Theory()
+                    1 -> Lesson36Practice()
                 }
 
                 "Указатель на функцию как возвращаемое значение" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson37Theory()
+                    1 -> Lesson37Practice()
                 }
 
                 "Динамические объекты" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson38Theory()
+                    1 -> Lesson38Practice()
                 }
 
                 "Динамические массивы" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson39Theory()
+                    1 -> Lesson39Practice()
                 }
 
                 "Определение классов" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson40Theory()
+                    1 -> Lesson40Practice()
                 }
 
                 "Конструкторы и инициализация объектов" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson41Theory()
+                    1 -> Lesson41Practice()
                 }
 
                 "Управление доступом. Инкапсуляция" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson42Theory()
+                    1 -> Lesson42Practice()
                 }
 
                 "Определение и объявление функций класса" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson43Theory()
+                    1 -> Lesson43Practice()
                 }
 
                 "Конструктор копирования" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson44Theory()
+                    1 -> Lesson44Practice()
                 }
 
                 "Константные объекты и функции" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson45Theory()
+                    1 -> Lesson45Practice()
                 }
 
                 "Ключевое слово this" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson46Theory()
+                    1 -> Lesson46Practice()
                 }
 
                 "Дружественные функции и классы" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson47Theory()
+                    1 -> Lesson47Practice()
                 }
 
                 "Статические члены класса" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson48Theory()
+                    1 -> Lesson48Practice()
                 }
 
                 "Деструктор" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson49Theory()
+                    1 -> Lesson49Practice()
                 }
 
                 "Структуры" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson50Theory()
+                    1 -> Lesson50Practice()
                 }
 
                 "Перечисления" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson51Theory()
+                    1 -> Lesson51Practice()
                 }
 
                 "Наследование" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson52Theory()
+                    1 -> Lesson52Practice()
                 }
 
                 "Управление доступом в базовых и производных классах" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson53Theory()
+                    1 -> Lesson53Practice()
                 }
 
                 "Скрытие функционала базового класса" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson54Theory()
+                    1 -> Lesson54Practice()
                 }
 
                 "Множественное наследование" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson55Theory()
+                    1 -> Lesson55Practice()
                 }
 
                 "Виртуальные функции и их переопределение" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson56Theory()
+                    1 -> Lesson56Practice()
                 }
 
                 "Преобразование типов" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson57Theory()
+                    1 -> Lesson57Practice()
                 }
 
                 "Динамическое преобразование" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson58Theory()
+                    1 -> Lesson58Practice()
                 }
 
                 "Особенности динамического связывания" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson59Theory()
+                    1 -> Lesson59Practice()
                 }
 
                 "Чистые  виртуальные функции и абстрактные классы" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson60Theory()
+                    1 -> Lesson60Practice()
                 }
 
                 "Перегрузка операторов" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson61Theory()
+                    1 -> Lesson61Practice()
                 }
 
                 "Операторы преобразования типов" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson62Theory()
+                    1 -> Lesson62Practice()
                 }
 
                 "Оператор индексирования" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson63Theory()
+                    1 -> Lesson63Practice()
                 }
 
                 "Переопределение оператора присваивания " -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
-                }
-
-                "Пространство имён" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson64Theory()
+                    1 -> Lesson64Practice()
                 }
 
                 "Вложенные классы" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice()
+                    0 -> Lesson65Theory()
+                    1 -> Lesson65Practice()
                 }
             }
         }

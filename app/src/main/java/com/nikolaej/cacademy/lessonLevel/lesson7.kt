@@ -1,2 +1,13 @@
 package com.nikolaej.cacademy.lessonLevel
 
+import androidx.compose.runtime.Composable
+
+@Composable
+fun Lesson7Theory(){
+
+}
+
+@Composable
+fun Lesson7Practice(){
+
+}

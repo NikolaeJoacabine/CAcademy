@@ -3,11 +3,11 @@ package com.nikolaej.cacademy.lessonLevel
 import androidx.compose.runtime.Composable
 
 @Composable
-fun Lesson9Theory(){
+fun Lesson45Theory(){
 
 }
 
 @Composable
-fun Lesson9Practice(){
+fun Lesson45Practice(){
 
 }

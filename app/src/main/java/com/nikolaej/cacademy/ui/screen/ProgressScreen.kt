@@ -57,7 +57,7 @@ fun ProgressScreeen(
 fun CustomComponent(
     canvasSize: Dp = 300.dp,
     indicatorValue: Int = 0,
-    maxIndicatorValue: Int = 66,
+    maxIndicatorValue: Int = 65,
     backgroundIndicatorColor: Color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.1f),
     backgroundIndicatorStrokeWidth: Float = 100f,
     foregroundIndicatorColor: Color = MaterialTheme.colorScheme.primary,
