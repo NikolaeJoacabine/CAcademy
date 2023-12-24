@@ -26,21 +26,21 @@ import com.nikolaej.cacademy.ui.screen.LessonScreenViewModel
 fun Lesson2Theory() {
     LazyColumn(Modifier.fillMaxSize().padding(horizontal = 8.dp), ) {
         item {
-            Text(text = LessonDestination.nameLesson, fontWeight = FontWeight.Bold)
+            Text(text = LessonDestination.nameLesson, style = MaterialTheme.typography.bodyLarge)
             Spacer(modifier = Modifier.size(8.dp))
-            Text(text = "1.Процедурное программирование:", fontWeight = FontWeight.Bold)
+            Text(text = "1.Процедурное программирование:", style = MaterialTheme.typography.bodyMedium)
             Text(style = MaterialTheme.typography.bodySmall,modifier = Modifier.padding(start = 8.dp),text = "Это один из самых старых подходов к программированию. В процедурном программировании задачи решаются с помощью процедур, которые представляют собой наборы инструкций. Примеры языков: C, Fortran.")
             Spacer(modifier = Modifier.size(8.dp))
-            Text(text = "2.Объектно-ориентированное программирование (ООП):", fontWeight = FontWeight.Bold)
+            Text(text = "2.Объектно-ориентированное программирование (ООП):", style = MaterialTheme.typography.bodyMedium)
             Text(style = MaterialTheme.typography.bodySmall,modifier = Modifier.padding(start = 8.dp),text = "В ООП используются объекты и классы для создания более сложных структур данных и программ. Примеры языков: Java, C++, Python.")
             Spacer(modifier = Modifier.size(8.dp))
-            Text(text = "3.Функциональное программирование:", fontWeight = FontWeight.Bold)
+            Text(text = "3.Функциональное программирование:", style = MaterialTheme.typography.bodyMedium)
             Text(style = MaterialTheme.typography.bodySmall,modifier = Modifier.padding(start = 8.dp),text = "Это подход, в котором программа состоит из чистых функций, которые не имеют побочных эффектов. Примеры языков: Haskell, Lisp, Scala.")
             Spacer(modifier = Modifier.size(8.dp))
-            Text(text = "4.Логическое программирование: ", fontWeight = FontWeight.Bold)
+            Text(text = "4.Логическое программирование: ", style = MaterialTheme.typography.bodyMedium)
             Text(style = MaterialTheme.typography.bodySmall,modifier = Modifier.padding(start = 8.dp),text = "В логическом программировании задачи решаются с помощью системы логических утверждений. Пример языка: Prolog.")
             Spacer(modifier = Modifier.size(8.dp))
-            Text(text = "5.Событийно-ориентированное программирование:", fontWeight = FontWeight.Bold)
+            Text(text = "5.Событийно-ориентированное программирование:", style = MaterialTheme.typography.bodyMedium)
             Text(style = MaterialTheme.typography.bodySmall,modifier = Modifier.padding(start = 8.dp),text = "Это подход, в котором поток выполнения программы определяется событиями, такими как действия пользователя или сообщения от других программ. Примеры языков: JavaScript, C#.")
         }
 

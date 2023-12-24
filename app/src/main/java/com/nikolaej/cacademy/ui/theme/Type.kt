@@ -29,8 +29,8 @@ val Typography = Typography(
     ),
     displaySmall = TextStyle(
         fontFamily = Comfortaa,
-        fontWeight = FontWeight.W400,
-        fontSize = 15.sp
+        fontWeight = FontWeight.W300,
+        fontSize = 14.sp
     ),
     headlineLarge = TextStyle(
         fontFamily = Comfortaa,
@@ -74,8 +74,8 @@ val Typography = Typography(
     ),
     bodySmall = TextStyle(
         fontFamily = Comfortaa,
-        fontWeight = FontWeight.W400,
-        fontSize = 16.sp
+        fontWeight = FontWeight.W300,
+        fontSize = 17.sp
     ),
 
 )

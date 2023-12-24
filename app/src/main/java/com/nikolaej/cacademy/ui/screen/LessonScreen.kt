@@ -181,6 +181,8 @@ import com.nikolaej.cacademy.lessonLevel.Lesson8Practice
 import com.nikolaej.cacademy.lessonLevel.Lesson8Theory
 import com.nikolaej.cacademy.lessonLevel.Lesson9Practice
 import com.nikolaej.cacademy.lessonLevel.Lesson9Theory
+import com.nikolaej.cacademy.lessonLevel.Lesson_4Practice
+import com.nikolaej.cacademy.lessonLevel.Lesson_4Theory
 import com.nikolaej.cacademy.ui.AppViewModelProvider
 import com.nikolaej.cacademy.ui.CAcademyViewModel
 import com.nikolaej.cacademy.ui.navigation.NavigationDestination
@@ -206,6 +208,7 @@ val tabItem = listOf(
 fun LessonScreen(
     viewModel: LessonScreenViewModel = viewModel(factory = AppViewModelProvider.Factory),
     navController: NavController,
+    darkTheme: Boolean
 ) {
 
     var pass by rememberSaveable {
@@ -324,8 +327,13 @@ fun LessonScreen(
                     1 -> Lesson3Practice(viewModel, navController)
                 }
 
+                "Структура программы" -> when(it) {
+                    0 -> Lesson_4Theory(darkTheme)
+                    1 -> Lesson_4Practice(viewModel, navController)
+                }
+
                 "Переменные" -> when (it) {
-                    0 -> Lesson4Theory()
+                    0 -> Lesson4Theory(darkTheme)
                     1 -> Lesson4Practice()
                 }
 

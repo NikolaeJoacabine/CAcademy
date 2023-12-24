@@ -29,7 +29,7 @@ fun Lesson3Theory() {
             .padding(horizontal = 8.dp),
     ) {
         item {
-            Text(text = "Язык программирования C++", fontWeight = FontWeight.Bold)
+            Text(text = "Язык программирования C++", style = MaterialTheme.typography.bodyLarge)
             Column(Modifier.padding(start = 8.dp)) {
                 Text(
                     text = "Язык программирования С++ представляет высокоуровневый компилируемый язык программирования общего назначения со статической типизацией, который подходит для создания самых различных приложений. На сегодняшний день С++ является одним из самых популярных и распространенных языков.",
@@ -63,7 +63,7 @@ fun Lesson3Theory() {
                 Spacer(modifier = Modifier.size(16.dp))
             }
 
-            Text(text = "Основные этапы развития", fontWeight = FontWeight.Bold)
+            Text(text = "Основные этапы развития", style = MaterialTheme.typography.bodyMedium)
             Column(Modifier.padding(start = 8.dp)) {
                 Text(
                     text = "В 1979-80 годах Бьерн Страуструп разработал расширение к языку Си - \"Си с классами\". В 1983 язык был переименован в С++.",

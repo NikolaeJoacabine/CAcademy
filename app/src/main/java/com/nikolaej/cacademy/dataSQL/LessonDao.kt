@@ -15,7 +15,7 @@ interface LessonDao{
         """
             SELECT * FROM lesson
             where nameModule = :nameModule
-            ORDER BY id ASC;
+            ORDER BY countInModule ASC;
         """
     )
     fun getAllLesson(nameModule: String): Flow<List<Lesson>>

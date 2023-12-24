@@ -10,6 +10,14 @@ data class Lesson(
     val nameLesson: String,
     val nameModule: String,
     val passTheTask: Boolean,
-    val Yes: Boolean
+    val Yes: Boolean,
+    val countInModule: Int
 
+)
+
+@Entity(tableName = "user")
+data class User(
+    @PrimaryKey
+    val id: Int,
+    val nameUser: String
 )

@@ -1,5 +1,6 @@
 package com.nikolaej.cacademy.lessonLevel
 
+import android.text.Html
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -38,7 +39,6 @@ fun Lesson1Theory() {
         item {
             Text(
                 text = stringResource(R.string.Lesson1Theory1),
-                fontWeight = FontWeight.Bold,
                 style = MaterialTheme.typography.bodyLarge
             )
 
@@ -52,7 +52,7 @@ fun Lesson1Theory() {
             Spacer(modifier = Modifier.size(8.dp))
 
 
-            Text(text = stringResource(R.string.Lesson1Theory3), fontWeight = FontWeight.Bold)
+            Text(text = stringResource(R.string.Lesson1Theory3), style = MaterialTheme.typography.bodyMedium)
 
 
 
@@ -64,7 +64,7 @@ fun Lesson1Theory() {
             Spacer(modifier = Modifier.size(8.dp))
 
 
-            Text(text = stringResource(R.string.Lesson1Theory5), fontWeight = FontWeight.Bold)
+            Text(text = stringResource(R.string.Lesson1Theory5), style = MaterialTheme.typography.bodyMedium)
 
 
 
@@ -76,7 +76,7 @@ fun Lesson1Theory() {
             Spacer(modifier = Modifier.size(8.dp))
 
 
-            Text(text = stringResource(R.string.Lesson1Theory7), fontWeight = FontWeight.Bold)
+            Text(text = stringResource(R.string.Lesson1Theory7), style = MaterialTheme.typography.bodyMedium)
 
 
 

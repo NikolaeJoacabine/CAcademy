@@ -84,16 +84,9 @@ import kotlinx.coroutines.launch
 fun ScreenApp(
     gameviewModel: CAcademyViewModel = viewModel(),
     navController: NavHostController = rememberNavController(),
-    lessonViewModel: LessonsScreenViewModel = viewModel(factory = AppViewModelProvider.Factory),
     darkTheme: Boolean,
     onClick: () -> Unit
 ) {
-
-
-    var countLesson by remember {
-        mutableIntStateOf(0)
-    }
-
     val paddingValue = WindowInsets.systemBars.asPaddingValues()
 
     val navBackStackEntry by navController.currentBackStackEntryAsState() //получаем в текстовом виде название страницы
@@ -200,6 +193,7 @@ fun ScreenApp(
                         top = paddingValues.calculateTopPadding(),
                         bottom = 0.dp
                     )
+
                     "Progress" -> Modifier.padding(
                         top = paddingValues.calculateTopPadding(),
                         bottom = 0.dp
@@ -260,7 +254,8 @@ fun ScreenApp(
                     gameviewModel.topBarState = false
                     LessonScreen(
                         navController = navController,
-                        )
+                        darkTheme = darkTheme
+                    )
                 }
 
                 composable(route = FinishDestination.route) {
@@ -396,8 +391,6 @@ private fun Very_beautiful_control_panel(
                     modifier = Modifier.size(30.dp)
                 )
             }
-
-
         }
     }
 }
