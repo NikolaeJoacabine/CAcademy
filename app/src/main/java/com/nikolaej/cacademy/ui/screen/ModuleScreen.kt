@@ -57,7 +57,7 @@ fun ModuleScreen(
 
         AnimatedVisibility(
             visible = module.moduleList.isNotEmpty(),
-            enter = fadeIn(tween(2000))
+            enter = fadeIn(tween(1000))
             ) {
             ModuleList(
                 moduleList = module.moduleList,
