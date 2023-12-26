@@ -201,7 +201,7 @@ fun ScreenApp(
 
                     else -> Modifier.padding(
                         top = paddingValue.calculateTopPadding(),
-                        bottom = 0.dp
+                        bottom = paddingValue.calculateBottomPadding()
                     )
                 }
 

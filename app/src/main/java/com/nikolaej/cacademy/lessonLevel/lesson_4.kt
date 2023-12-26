@@ -17,6 +17,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.SpanStyle
@@ -28,6 +30,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.nikolaej.cacademy.tipsTasck.ToggleableInfo
+import com.nikolaej.cacademy.tipsTasck.task_with_a_choise
 import com.nikolaej.cacademy.ui.screen.LessonDestination
 import com.nikolaej.cacademy.ui.screen.LessonScreenViewModel
 import com.nikolaej.cacademy.ui.theme.CAcademyTheme
@@ -47,7 +51,7 @@ fun Lesson_4Theory(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(8.dp)
+            .padding(horizontal = 8.dp)
     ) {
         item {
             Text(text = LessonDestination.nameLesson, style = MaterialTheme.typography.bodyLarge)
@@ -801,12 +805,27 @@ fun Lesson_4Practice(
     navController: NavController
 ) {
     AnimatedVisibility(visible = viewModel.progress == 0f) {
-        LazyColumn(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(8.dp)
         ) {
-
+            val radioButtons = remember {
+                mutableStateListOf(
+                    ToggleableInfo(
+                        isChecked = false,
+                        text = "Привет"
+                    ),
+                    ToggleableInfo(
+                        isChecked = false,
+                        text = "Пока"
+                    ),
+                    ToggleableInfo(
+                        isChecked = false,
+                        text = "Как дела?"
+                    ),
+                )
+            }
+            task_with_a_choise(radioButtons, "привет", 1) { viewModel.progress += 0.1f }
         }
     }
 }

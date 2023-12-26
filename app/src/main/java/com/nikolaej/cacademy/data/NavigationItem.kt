@@ -42,3 +42,9 @@ val items = listOf(
         nav = ProgressDestination.route
     )
 )
+
+val randomNo = listOf(
+    "Подумайте ещё раз",
+    "Попробуйте заново",
+    "Может есть другое решение?"
+)
