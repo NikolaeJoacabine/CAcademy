@@ -15,7 +15,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.sharp.Info
@@ -48,6 +50,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.exyte.animatednavbar.utils.noRippleClickable
 import com.nikolaej.cacademy.data.randomNo
+import com.nikolaej.cacademy.ui.screen.LessonScreenViewModel
 import com.nikolaej.cacademy.ui.theme.CAcademyTheme
 
 
@@ -62,7 +65,7 @@ fun task_with_a_choise(
     name: SnapshotStateList<ToggleableInfo>,
     question: String,
     count: Int,
-    fff: () -> Unit
+    viewModel: LessonScreenViewModel
 ) {
     val sheetState = rememberModalBottomSheetState()
     var isSheetOpen by rememberSaveable {
@@ -81,7 +84,9 @@ fun task_with_a_choise(
     )
 
     Column(
-        Modifier.fillMaxSize()
+        Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
     ) {
         Column {
 
@@ -162,7 +167,10 @@ fun task_with_a_choise(
                             .padding(16.dp)
                     ) {
                         Button(
-                            onClick = fff,
+                            onClick = {
+                                isSheetOpen = false
+                                viewModel.progress += 0.1f
+                            },
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(10.dp)
                         ) {
@@ -255,29 +263,5 @@ private fun RadioButtons(
                 Text(text = info.text)
             }
         }
-    }
-}
-
-@Preview
-@Composable
-fun ddd() {
-    CAcademyTheme {
-        val radioButtons = remember {
-            mutableStateListOf(
-                ToggleableInfo(
-                    isChecked = false,
-                    text = "Привет"
-                ),
-                ToggleableInfo(
-                    isChecked = false,
-                    text = "Пока"
-                ),
-                ToggleableInfo(
-                    isChecked = false,
-                    text = "Как дела?"
-                ),
-            )
-        }
-        task_with_a_choise(radioButtons, "привет", 1) { }
     }
 }

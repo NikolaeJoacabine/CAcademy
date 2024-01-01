@@ -31,6 +31,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.nikolaej.cacademy.tipsTasck.ToggleableInfo
+import com.nikolaej.cacademy.tipsTasck.cartochca
+import com.nikolaej.cacademy.tipsTasck.lot_of_choise
 import com.nikolaej.cacademy.tipsTasck.task_with_a_choise
 import com.nikolaej.cacademy.ui.screen.LessonDestination
 import com.nikolaej.cacademy.ui.screen.LessonScreenViewModel
@@ -802,8 +804,10 @@ fun Lesson_4Theory(
 @Composable
 fun Lesson_4Practice(
     viewModel: LessonScreenViewModel,
-    navController: NavController
+    navController: NavController,
 ) {
+
+
     AnimatedVisibility(visible = viewModel.progress == 0f) {
         Column(
             modifier = Modifier
@@ -825,8 +829,47 @@ fun Lesson_4Practice(
                     ),
                 )
             }
-            task_with_a_choise(radioButtons, "привет", 1) { viewModel.progress += 0.1f }
+            task_with_a_choise(radioButtons, "привет", 1, viewModel)
         }
+    }
+
+    AnimatedVisibility(visible = viewModel.progress == 0.1f) {
+        var youChoiseState = remember {
+            mutableStateListOf(
+                 "}"
+            )
+        }
+        val correrct = remember {
+            mutableStateListOf("<<")
+        }
+        lot_of_choise(
+            variantCorrect = correrct,
+            youChoise = youChoiseState,
+            fff = { },
+            varick = viewModel.varick,
+            code = {
+                Row(
+                    modifier = Modifier.padding(vertical = 4.dp, horizontal = 4.dp),
+                ) {
+                    Text(
+                        text = "std::cout  ",
+                        style = MaterialTheme.typography.displaySmall,
+                    )
+                    cartochca(viewModel = viewModel)
+
+                    Text(
+                        text = " \"Hello World!\"",
+                        style = MaterialTheme.typography.displaySmall,
+                        color = string_dark
+
+                    )
+                    Text(
+                        text = ";",
+                        style = MaterialTheme.typography.displaySmall,
+                    )
+                }
+            }
+        )
     }
 }
 
