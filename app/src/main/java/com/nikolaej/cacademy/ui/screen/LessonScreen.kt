@@ -71,8 +71,6 @@ import com.nikolaej.cacademy.lessonLevel.Lesson18Practice
 import com.nikolaej.cacademy.lessonLevel.Lesson18Theory
 import com.nikolaej.cacademy.lessonLevel.Lesson19Practice
 import com.nikolaej.cacademy.lessonLevel.Lesson19Theory
-import com.nikolaej.cacademy.lessonLevel.Lesson1Practice
-import com.nikolaej.cacademy.lessonLevel.Lesson1Theory
 import com.nikolaej.cacademy.lessonLevel.Lesson20Practice
 import com.nikolaej.cacademy.lessonLevel.Lesson20Theory
 import com.nikolaej.cacademy.lessonLevel.Lesson21Practice
@@ -93,8 +91,6 @@ import com.nikolaej.cacademy.lessonLevel.Lesson28Practice
 import com.nikolaej.cacademy.lessonLevel.Lesson28Theory
 import com.nikolaej.cacademy.lessonLevel.Lesson29Practice
 import com.nikolaej.cacademy.lessonLevel.Lesson29Theory
-import com.nikolaej.cacademy.lessonLevel.Lesson2Practice
-import com.nikolaej.cacademy.lessonLevel.Lesson2Theory
 import com.nikolaej.cacademy.lessonLevel.Lesson30Practice
 import com.nikolaej.cacademy.lessonLevel.Lesson30Theory
 import com.nikolaej.cacademy.lessonLevel.Lesson31Practice
@@ -115,8 +111,6 @@ import com.nikolaej.cacademy.lessonLevel.Lesson38Practice
 import com.nikolaej.cacademy.lessonLevel.Lesson38Theory
 import com.nikolaej.cacademy.lessonLevel.Lesson39Practice
 import com.nikolaej.cacademy.lessonLevel.Lesson39Theory
-import com.nikolaej.cacademy.lessonLevel.Lesson3Practice
-import com.nikolaej.cacademy.lessonLevel.Lesson3Theory
 import com.nikolaej.cacademy.lessonLevel.Lesson40Practice
 import com.nikolaej.cacademy.lessonLevel.Lesson40Theory
 import com.nikolaej.cacademy.lessonLevel.Lesson41Practice
@@ -184,7 +178,6 @@ import com.nikolaej.cacademy.lessonLevel.Lesson9Theory
 import com.nikolaej.cacademy.lessonLevel.Lesson_4Practice
 import com.nikolaej.cacademy.lessonLevel.Lesson_4Theory
 import com.nikolaej.cacademy.ui.AppViewModelProvider
-import com.nikolaej.cacademy.ui.CAcademyViewModel
 import com.nikolaej.cacademy.ui.navigation.NavigationDestination
 
 
@@ -312,29 +305,14 @@ fun LessonScreen(
                 .weight(1f)
         ) {
             when (LessonDestination.nameLesson) {
-                "Что такое программирование?" -> when (it) {
-                    0 -> Lesson1Theory()
-                    1 -> Lesson1Practice(viewModel, navController)
-                }
-
-                "Виды программирования" -> when (it) {
-                    0 -> Lesson2Theory()
-                    1 -> Lesson2Practice(viewModel, navController)
-                }
-
-                "Язык программирования C++" -> when (it) {
-                    0 -> Lesson3Theory()
-                    1 -> Lesson3Practice(viewModel, navController)
-                }
-
                 "Структура программы" -> when(it) {
                     0 -> Lesson_4Theory(darkTheme)
-                    1 -> Lesson_4Practice(viewModel, navController)
+                    1 -> Lesson_4Practice(viewModel, navController, darkTheme)
                 }
 
                 "Переменные" -> when (it) {
                     0 -> Lesson4Theory(darkTheme)
-                    1 -> Lesson4Practice()
+                    1 -> Lesson4Practice(viewModel, navController, darkTheme)
                 }
 
                 "Типы данных" -> when (it) {

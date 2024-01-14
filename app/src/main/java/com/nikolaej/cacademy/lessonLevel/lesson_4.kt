@@ -1,16 +1,14 @@
 package com.nikolaej.cacademy.lessonLevel
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Card
@@ -20,13 +18,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -34,9 +30,9 @@ import com.nikolaej.cacademy.tipsTasck.ToggleableInfo
 import com.nikolaej.cacademy.tipsTasck.cartochca
 import com.nikolaej.cacademy.tipsTasck.lot_of_choise
 import com.nikolaej.cacademy.tipsTasck.task_with_a_choise
+import com.nikolaej.cacademy.ui.screen.FinishDestination
 import com.nikolaej.cacademy.ui.screen.LessonDestination
 import com.nikolaej.cacademy.ui.screen.LessonScreenViewModel
-import com.nikolaej.cacademy.ui.theme.CAcademyTheme
 import com.nikolaej.cacademy.ui.theme.comment_dark
 import com.nikolaej.cacademy.ui.theme.comment_light
 import com.nikolaej.cacademy.ui.theme.helper_dark
@@ -66,46 +62,30 @@ fun Lesson_4Theory(
                 Modifier.padding(4.dp)
             ) {
                 Column(
-                    Modifier.padding(4.dp)
+                    Modifier
+                        .fillMaxSize()
+                        .padding(4.dp)
                 ) {
                     Row(
-                        Modifier.fillMaxWidth()
+                        modifier = Modifier.horizontalScroll(rememberScrollState()),
                     ) {
-                        Box(modifier = Modifier.width(16.dp)) {
-                            Column {
-                                Text(
-                                    text = "1",
-                                    style = MaterialTheme.typography.displaySmall,
-                                    modifier = Modifier.alpha(0.4f)
-                                )
+                        Text(
+                            text = "std::cout << ",
+                            style = MaterialTheme.typography.displaySmall,
+                        )
+                        Text(
+                            text = " \"Hello World!\"",
+                            style = MaterialTheme.typography.displaySmall,
+                            color = if (darkTheme) {
+                                string_dark
+                            } else {
+                                string_light
                             }
-                        }
-
-                        Column(
-                            Modifier.weight(1f)
-                        ) {
-                            Row(
-                                modifier = Modifier.horizontalScroll(rememberScrollState()),
-                            ) {
-                                Text(
-                                    text = "std::cout << ",
-                                    style = MaterialTheme.typography.displaySmall,
-                                )
-                                Text(
-                                    text = " \"Hello World!\"",
-                                    style = MaterialTheme.typography.displaySmall,
-                                    color = if (darkTheme) {
-                                        string_dark
-                                    } else {
-                                        string_light
-                                    }
-                                )
-                                Text(
-                                    text = ";",
-                                    style = MaterialTheme.typography.displaySmall,
-                                )
-                            }
-                        }
+                        )
+                        Text(
+                            text = ";",
+                            style = MaterialTheme.typography.displaySmall,
+                        )
                     }
                 }
             }
@@ -122,70 +102,52 @@ fun Lesson_4Theory(
                 Modifier.padding(4.dp)
             ) {
                 Column(
-                    Modifier.padding(4.dp)
+                    Modifier
+                        .fillMaxSize()
+                        .padding(4.dp)
                 ) {
-                    Row(
-                        Modifier.fillMaxWidth()
-                    ) {
-                        Box(modifier = Modifier.width(16.dp)) {
-                            Column {
-                                for (i in 1..4) {
-                                    Text(
-                                        text = "$i",
-                                        style = MaterialTheme.typography.displaySmall,
-                                        modifier = Modifier.alpha(0.4f)
-                                    )
-                                }
+                    Text(text = "{", style = MaterialTheme.typography.displaySmall)
+                    Row {
+                        Text(
+                            text = "    std::cout << ",
+                            style = MaterialTheme.typography.displaySmall,
+                        )
+                        Text(
+                            text = " \"Hello World!\"",
+                            style = MaterialTheme.typography.displaySmall,
+                            color = if (darkTheme) {
+                                string_dark
+                            } else {
+                                string_light
                             }
-                        }
-                        Column(
-                            Modifier.weight(1f)
-                        ) {
-                            Text(text = "{", style = MaterialTheme.typography.displaySmall)
-                            Row {
-                                Text(
-                                    text = "    std::cout << ",
-                                    style = MaterialTheme.typography.displaySmall,
-                                )
-                                Text(
-                                    text = " \"Hello World!\"",
-                                    style = MaterialTheme.typography.displaySmall,
-                                    color = if (darkTheme) {
-                                        string_dark
-                                    } else {
-                                        string_light
-                                    }
-                                )
-                                Text(
-                                    text = ";",
-                                    style = MaterialTheme.typography.displaySmall,
-                                )
-                            }
-                            Row {
-                                Text(
-                                    text = "    std::cout << ",
-                                    style = MaterialTheme.typography.displaySmall,
-                                )
-                                Text(
-                                    text = " \"Bye World!\"",
-                                    style = MaterialTheme.typography.displaySmall,
-                                    color = if (darkTheme) {
-                                        string_dark
-                                    } else {
-                                        string_light
-                                    }
-                                )
-                                Text(
-                                    text = ";",
-                                    style = MaterialTheme.typography.displaySmall,
-                                )
-                            }
-                            Text(text = "}", style = MaterialTheme.typography.displaySmall)
-                        }
+                        )
+                        Text(
+                            text = ";",
+                            style = MaterialTheme.typography.displaySmall,
+                        )
                     }
+                    Row {
+                        Text(
+                            text = "    std::cout << ",
+                            style = MaterialTheme.typography.displaySmall,
+                        )
+                        Text(
+                            text = " \"Bye World!\"",
+                            style = MaterialTheme.typography.displaySmall,
+                            color = if (darkTheme) {
+                                string_dark
+                            } else {
+                                string_light
+                            }
+                        )
+                        Text(
+                            text = ";",
+                            style = MaterialTheme.typography.displaySmall,
+                        )
+                    }
+                    Text(text = "}", style = MaterialTheme.typography.displaySmall)
                 }
             }
-
             Text(
                 text = "В этом блоке кода две инструкции, которые выводят на консоль определенную строку.",
                 style = MaterialTheme.typography.bodySmall
@@ -225,92 +187,75 @@ fun Lesson_4Theory(
                 Modifier.padding(4.dp)
             ) {
                 Column(
-                    Modifier.padding(4.dp)
+                    Modifier
+                        .fillMaxSize()
+                        .padding(4.dp)
                 ) {
-                    Row(
-                        Modifier.fillMaxWidth()
-                    ) {
-                        Box(modifier = Modifier.width(16.dp)) {
-                            Column {
-                                for (i in 1..7) {
-                                    Text(
-                                        text = "$i",
-                                        style = MaterialTheme.typography.displaySmall,
-                                        modifier = Modifier.alpha(0.4f)
-                                    )
-                                }
-                            }
-                        }
-                        Column(
-                            Modifier.weight(1f)
-                        ) {
 
-                            Row {
-                                Row {
-                                    Text(
-                                        text = " #include ",
-                                        style = MaterialTheme.typography.displaySmall,
+                    Row {
+                        Row {
+                            Text(
+                                text = " #include ",
+                                style = MaterialTheme.typography.displaySmall,
 
-                                        )
-                                    Text(
-                                        text = "<iostream>",
-                                        style = MaterialTheme.typography.displaySmall,
-                                        color = if (darkTheme) {
-                                            string_dark
-                                        } else {
-                                            string_light
-                                        }
-                                    )
+                                )
+                            Text(
+                                text = "<iostream>",
+                                style = MaterialTheme.typography.displaySmall,
+                                color = if (darkTheme) {
+                                    string_dark
+                                } else {
+                                    string_light
                                 }
-                            }
-                            Text(text = "", style = MaterialTheme.typography.displaySmall)
-                            Row {
-                                Text(
-                                    text = " int ",
-                                    style = MaterialTheme.typography.displaySmall,
-                                    color = if (darkTheme) {
-                                        intov_dark
-                                    } else {
-                                        intov_light
-                                    }
-                                )
-                                Text(text = "main()", style = MaterialTheme.typography.displaySmall)
-                            }
-                            Text(text = " {", style = MaterialTheme.typography.displaySmall)
-                            Row {
-                                Text(
-                                    text = "    std::cout << ",
-                                    style = MaterialTheme.typography.displaySmall,
-                                )
-                                Text(
-                                    text = " \"Hello World!\"",
-                                    style = MaterialTheme.typography.displaySmall,
-                                    color = if (darkTheme) {
-                                        string_dark
-                                    } else {
-                                        string_light
-                                    }
-                                )
-                                Text(
-                                    text = ";",
-                                    style = MaterialTheme.typography.displaySmall,
-                                )
-                            }
-                            Row {
-                                Text(
-                                    text = "    return ",
-                                    style = MaterialTheme.typography.displaySmall,
-                                    color = if (darkTheme) {
-                                        helper_dark
-                                    } else {
-                                        helper_light
-                                    }
-                                )
-                                Text(text = "0;", style = MaterialTheme.typography.displaySmall)
-                            }
-                            Text(text = " }", style = MaterialTheme.typography.displaySmall)
+                            )
                         }
                     }
+                    Text(text = "", style = MaterialTheme.typography.displaySmall)
+                    Row {
+                        Text(
+                            text = " int ",
+                            style = MaterialTheme.typography.displaySmall,
+                            color = if (darkTheme) {
+                                intov_dark
+                            } else {
+                                intov_light
+                            }
+                        )
+                        Text(text = "main()", style = MaterialTheme.typography.displaySmall)
+                    }
+                    Text(text = " {", style = MaterialTheme.typography.displaySmall)
+                    Row {
+                        Text(
+                            text = "    std::cout << ",
+                            style = MaterialTheme.typography.displaySmall,
+                        )
+                        Text(
+                            text = " \"Hello World!\"",
+                            style = MaterialTheme.typography.displaySmall,
+                            color = if (darkTheme) {
+                                string_dark
+                            } else {
+                                string_light
+                            }
+                        )
+                        Text(
+                            text = ";",
+                            style = MaterialTheme.typography.displaySmall,
+                        )
+                    }
+                    Row {
+                        Text(
+                            text = "    return ",
+                            style = MaterialTheme.typography.displaySmall,
+                            color = if (darkTheme) {
+                                helper_dark
+                            } else {
+                                helper_light
+                            }
+                        )
+                        Text(text = "0;", style = MaterialTheme.typography.displaySmall)
+                    }
+                    Text(text = " }", style = MaterialTheme.typography.displaySmall)
                 }
             }
             Text(buildAnnotatedString {
@@ -362,37 +307,20 @@ fun Lesson_4Theory(
                 Modifier.padding(4.dp)
             ) {
                 Column(
-                    Modifier.padding(4.dp)
+                    Modifier
+                        .fillMaxSize()
+                        .padding(4.dp)
                 ) {
-                    Row(
-                        Modifier.fillMaxWidth()
-                    ) {
-                        Box(modifier = Modifier.width(16.dp)) {
-                            Column {
-                                for (i in 1..1) {
-                                    Text(
-                                        text = "$i",
-                                        style = MaterialTheme.typography.displaySmall,
-                                        modifier = Modifier.alpha(0.4f)
-                                    )
-                                }
+                    Row {
+                        Text(
+                            text = "return ", style = MaterialTheme.typography.displaySmall,
+                            color = if (darkTheme) {
+                                helper_dark
+                            } else {
+                                helper_light
                             }
-                        }
-                        Column(
-                            Modifier.weight(1f)
-                        ) {
-                            Row {
-                                Text(
-                                    text = "return ", style = MaterialTheme.typography.displaySmall,
-                                    color = if (darkTheme) {
-                                        helper_dark
-                                    } else {
-                                        helper_light
-                                    }
-                                )
-                                Text(text = "0", style = MaterialTheme.typography.displaySmall)
-                            }
-                        }
+                        )
+                        Text(text = "0", style = MaterialTheme.typography.displaySmall)
                     }
                 }
             }
@@ -428,39 +356,24 @@ fun Lesson_4Theory(
                 Modifier.padding(4.dp)
             ) {
                 Column(
-                    Modifier.padding(4.dp)
+                    Modifier
+                        .fillMaxSize()
+                        .padding(4.dp)
                 ) {
-                    Row(
-                        Modifier.fillMaxWidth()
-                    ) {
-                        Box(modifier = Modifier.width(16.dp)) {
-                            Column {
-                                Text(
-                                    text = "1",
-                                    style = MaterialTheme.typography.displaySmall,
-                                    modifier = Modifier.alpha(0.4f)
-                                )
+                    Row {
+                        Text(
+                            text = "#include ",
+                            style = MaterialTheme.typography.displaySmall,
+                        )
+                        Text(
+                            text = "<iostream>",
+                            style = MaterialTheme.typography.displaySmall,
+                            color = if (darkTheme) {
+                                string_dark
+                            } else {
+                                string_light
                             }
-                        }
-                        Column(
-                            Modifier.weight(1f)
-                        ) {
-                            Row {
-                                Text(
-                                    text = "#include ",
-                                    style = MaterialTheme.typography.displaySmall,
-                                )
-                                Text(
-                                    text = "<iostream>",
-                                    style = MaterialTheme.typography.displaySmall,
-                                    color = if (darkTheme) {
-                                        string_dark
-                                    } else {
-                                        string_light
-                                    }
-                                )
-                            }
-                        }
+                        )
                     }
                 }
             }
@@ -495,7 +408,7 @@ fun Lesson_4Theory(
             })
             Text(text = "Комментарии", style = MaterialTheme.typography.bodyMedium)
             Text(
-                text = "Исходный код может содержать комментарии. Комментарии позволяют понять смысл программы, что делают те или иные ее части. При компиляции комментарии игнорируются и не оказывают никакого влияние на работу приложения и на его размер.",
+                text = "Исходный код может содержать комментарии. Комментарии позволяют понять смысл программы, что делают те или иные ее части. При компиляции комментарии игнорируются и не оказывают никакого влияния на работу приложения и на его размер.",
                 style = MaterialTheme.typography.bodySmall
             )
             Text(
@@ -506,131 +419,114 @@ fun Lesson_4Theory(
                 Modifier.padding(4.dp)
             ) {
                 Column(
-                    Modifier.padding(4.dp)
+                    Modifier
+                        .fillMaxSize()
+                        .padding(4.dp)
                 ) {
-                    Row(
-                        Modifier.fillMaxWidth()
-                    ) {
-                        Box(modifier = Modifier.width(16.dp)) {
-                            Column {
-                                for (i in 1..8) {
-                                    Text(
-                                        text = "$i",
-                                        style = MaterialTheme.typography.displaySmall,
-                                        modifier = Modifier.alpha(0.4f)
-                                    )
-                                }
-                            }
-                        }
-                        Column(
-                            Modifier.weight(1f)
-                        ) {
 
-                            Row {
-                                Row {
-                                    Text(
-                                        text = " #include ",
-                                        style = MaterialTheme.typography.displaySmall,
-
-                                        )
-                                    Text(
-                                        text = "<iostream>",
-                                        style = MaterialTheme.typography.displaySmall,
-                                        color = if (darkTheme) {
-                                            string_dark
-                                        } else {
-                                            string_light
-                                        }
-                                    )
-
-                                }
-                            }
+                    Row {
+                        Row {
                             Text(
-                                text = "// подключаем библиотеку iostream",
+                                text = " #include ",
+                                style = MaterialTheme.typography.displaySmall,
+
+                                )
+                            Text(
+                                text = "<iostream>",
                                 style = MaterialTheme.typography.displaySmall,
                                 color = if (darkTheme) {
-                                    comment_dark
+                                    string_dark
                                 } else {
-                                    comment_light
+                                    string_light
                                 }
                             )
-                            Text(text = "", style = MaterialTheme.typography.displaySmall)
-                            Row {
-                                Text(
-                                    text = " int ",
-                                    style = MaterialTheme.typography.displaySmall,
-                                    color = if (darkTheme) {
-                                        intov_dark
-                                    } else {
-                                        intov_light
-                                    }
-                                )
-                                Text(text = "main()", style = MaterialTheme.typography.displaySmall)
-                                Text(
-                                    text = " // начало функции",
-                                    style = MaterialTheme.typography.displaySmall,
-                                    color = if (darkTheme) {
-                                        comment_dark
-                                    } else {
-                                        comment_light
-                                    }
-                                )
-                            }
-                            Text(text = " {", style = MaterialTheme.typography.displaySmall)
-                            Row {
-                                Text(
-                                    text = "    std::cout << ",
-                                    style = MaterialTheme.typography.displaySmall,
-                                )
-                                Text(
-                                    text = " \"Hello World!\"",
-                                    style = MaterialTheme.typography.displaySmall,
-                                    color = if (darkTheme) {
-                                        string_dark
-                                    } else {
-                                        string_light
-                                    }
-                                )
-                                Text(
-                                    text = ";",
-                                    style = MaterialTheme.typography.displaySmall,
-                                )
-                                Text(
-                                    text = " // вывод",
-                                    style = MaterialTheme.typography.displaySmall,
-                                    color = if (darkTheme) {
-                                        comment_dark
-                                    } else {
-                                        comment_light
-                                    }
-                                )
-                            }
-                            Row {
-                                Text(
-                                    text = "    return ",
-                                    style = MaterialTheme.typography.displaySmall,
-                                    color = if (darkTheme) {
-                                        helper_dark
-                                    } else {
-                                        helper_light
-                                    }
-                                )
-                                Text(text = "0;", style = MaterialTheme.typography.displaySmall)
-                                Text(
-                                    text = " // выход из функции",
-                                    style = MaterialTheme.typography.displaySmall,
-                                    color = if (darkTheme) {
-                                        comment_dark
-                                    } else {
-                                        comment_light
-                                    }
-                                )
-
-                            }
-                            Text(text = " }", style = MaterialTheme.typography.displaySmall)
 
                         }
                     }
+                    Text(
+                        text = "// подключаем библиотеку iostream",
+                        style = MaterialTheme.typography.displaySmall,
+                        color = if (darkTheme) {
+                            comment_dark
+                        } else {
+                            comment_light
+                        }
+                    )
+                    Text(text = "", style = MaterialTheme.typography.displaySmall)
+                    Row {
+                        Text(
+                            text = " int ",
+                            style = MaterialTheme.typography.displaySmall,
+                            color = if (darkTheme) {
+                                intov_dark
+                            } else {
+                                intov_light
+                            }
+                        )
+                        Text(text = "main()", style = MaterialTheme.typography.displaySmall)
+                        Text(
+                            text = " // начало функции",
+                            style = MaterialTheme.typography.displaySmall,
+                            color = if (darkTheme) {
+                                comment_dark
+                            } else {
+                                comment_light
+                            }
+                        )
+                    }
+                    Text(text = " {", style = MaterialTheme.typography.displaySmall)
+                    Row {
+                        Text(
+                            text = "    std::cout << ",
+                            style = MaterialTheme.typography.displaySmall,
+                        )
+                        Text(
+                            text = " \"Hello World!\"",
+                            style = MaterialTheme.typography.displaySmall,
+                            color = if (darkTheme) {
+                                string_dark
+                            } else {
+                                string_light
+                            }
+                        )
+                        Text(
+                            text = ";",
+                            style = MaterialTheme.typography.displaySmall,
+                        )
+                        Text(
+                            text = " // вывод",
+                            style = MaterialTheme.typography.displaySmall,
+                            color = if (darkTheme) {
+                                comment_dark
+                            } else {
+                                comment_light
+                            }
+                        )
+                    }
+                    Row {
+                        Text(
+                            text = "    return ",
+                            style = MaterialTheme.typography.displaySmall,
+                            color = if (darkTheme) {
+                                helper_dark
+                            } else {
+                                helper_light
+                            }
+                        )
+                        Text(text = "0;", style = MaterialTheme.typography.displaySmall)
+                        Text(
+                            text = " // выход из функции",
+                            style = MaterialTheme.typography.displaySmall,
+                            color = if (darkTheme) {
+                                comment_dark
+                            } else {
+                                comment_light
+                            }
+                        )
+
+                    }
+                    Text(text = " }", style = MaterialTheme.typography.displaySmall)
+
                 }
             }
             Text(buildAnnotatedString {
@@ -664,137 +560,111 @@ fun Lesson_4Theory(
                 Modifier.padding(4.dp)
             ) {
                 Column(
-                    Modifier.padding(4.dp)
+                    Modifier
+                        .fillMaxSize()
+                        .padding(4.dp)
                 ) {
-                    Row(
-                        Modifier.fillMaxWidth()
-                    ) {
-                        Box(modifier = Modifier.width(16.dp)) {
-                            Column {
-                                for (i in 1..10) {
-                                    Text(
-                                        text = "$i",
-                                        style = MaterialTheme.typography.displaySmall,
-                                        modifier = Modifier.alpha(0.4f)
-                                    )
-                                }
-                            }
-                        }
-                        Column(
-                            Modifier.weight(1f)
-                        ) {
 
-                            Row {
-                                Row {
-                                    Text(
-                                        text = " #include ",
-                                        style = MaterialTheme.typography.displaySmall,
+                    Row {
+                        Row {
+                            Text(
+                                text = " #include ",
+                                style = MaterialTheme.typography.displaySmall,
 
-                                        )
-                                    Text(
-                                        text = "<iostream>",
-                                        style = MaterialTheme.typography.displaySmall,
-                                        color = if (darkTheme) {
-                                            string_dark
-                                        } else {
-                                            string_light
-                                        }
-                                    )
-                                }
-                            }
+                                )
                             Text(
-                                text = "/*",
+                                text = "<iostream>",
                                 style = MaterialTheme.typography.displaySmall,
                                 color = if (darkTheme) {
-                                    comment_dark
+                                    string_dark
                                 } else {
-                                    comment_light
+                                    string_light
                                 }
                             )
-                            Text(
-                                text = "Определение функции Main",
-                                style = MaterialTheme.typography.displaySmall,
-                                color = if (darkTheme) {
-                                    comment_dark
-                                } else {
-                                    comment_light
-                                }
-                            )
-                            Text(
-                                text = "Выводит на консоль строку Hello World!",
-                                style = MaterialTheme.typography.displaySmall,
-                                color = if (darkTheme) {
-                                    comment_dark
-                                } else {
-                                    comment_light
-                                }
-                            )
-                            Text(
-                                text = "*/",
-                                style = MaterialTheme.typography.displaySmall,
-                                color = if (darkTheme) {
-                                    comment_dark
-                                } else {
-                                    comment_light
-                                }
-                            )
-                            Row {
-                                Text(
-                                    text = " int ",
-                                    style = MaterialTheme.typography.displaySmall,
-                                    color = if (darkTheme) {
-                                        intov_dark
-                                    } else {
-                                        intov_light
-                                    }
-                                )
-                                Text(text = "main()", style = MaterialTheme.typography.displaySmall)
-                            }
-                            Text(text = " {", style = MaterialTheme.typography.displaySmall)
-                            Row {
-                                Text(
-                                    text = "    std::cout << ",
-                                    style = MaterialTheme.typography.displaySmall,
-                                )
-                                Text(
-                                    text = " \"Hello World!\"",
-                                    style = MaterialTheme.typography.displaySmall,
-                                    color = if (darkTheme) {
-                                        string_dark
-                                    } else {
-                                        string_light
-                                    }
-                                )
-                                Text(
-                                    text = ";",
-                                    style = MaterialTheme.typography.displaySmall,
-                                )
-                                Text(
-                                    text = " // вывод",
-                                    style = MaterialTheme.typography.displaySmall,
-                                    color = if (darkTheme) {
-                                        comment_dark
-                                    } else {
-                                        comment_light
-                                    }
-                                )
-                            }
-                            Row {
-                                Text(
-                                    text = "    return ",
-                                    style = MaterialTheme.typography.displaySmall,
-                                    color = if (darkTheme) {
-                                        helper_dark
-                                    } else {
-                                        helper_light
-                                    }
-                                )
-                                Text(text = "0;", style = MaterialTheme.typography.displaySmall)
-                            }
-                            Text(text = " }", style = MaterialTheme.typography.displaySmall)
-
                         }
                     }
+                    Text(
+                        text = "/*",
+                        style = MaterialTheme.typography.displaySmall,
+                        color = if (darkTheme) {
+                            comment_dark
+                        } else {
+                            comment_light
+                        }
+                    )
+                    Text(
+                        text = "Определение функции Main",
+                        style = MaterialTheme.typography.displaySmall,
+                        color = if (darkTheme) {
+                            comment_dark
+                        } else {
+                            comment_light
+                        }
+                    )
+                    Text(
+                        text = "*/",
+                        style = MaterialTheme.typography.displaySmall,
+                        color = if (darkTheme) {
+                            comment_dark
+                        } else {
+                            comment_light
+                        }
+                    )
+                    Row {
+                        Text(
+                            text = " int ",
+                            style = MaterialTheme.typography.displaySmall,
+                            color = if (darkTheme) {
+                                intov_dark
+                            } else {
+                                intov_light
+                            }
+                        )
+                        Text(text = "main()", style = MaterialTheme.typography.displaySmall)
+                    }
+                    Text(text = " {", style = MaterialTheme.typography.displaySmall)
+                    Row {
+                        Text(
+                            text = "    std::cout << ",
+                            style = MaterialTheme.typography.displaySmall,
+                        )
+                        Text(
+                            text = " \"Hello World!\"",
+                            style = MaterialTheme.typography.displaySmall,
+                            color = if (darkTheme) {
+                                string_dark
+                            } else {
+                                string_light
+                            }
+                        )
+                        Text(
+                            text = ";",
+                            style = MaterialTheme.typography.displaySmall,
+                        )
+                        Text(
+                            text = " // вывод",
+                            style = MaterialTheme.typography.displaySmall,
+                            color = if (darkTheme) {
+                                comment_dark
+                            } else {
+                                comment_light
+                            }
+                        )
+                    }
+                    Row {
+                        Text(
+                            text = "    return ",
+                            style = MaterialTheme.typography.displaySmall,
+                            color = if (darkTheme) {
+                                helper_dark
+                            } else {
+                                helper_light
+                            }
+                        )
+                        Text(text = "0;", style = MaterialTheme.typography.displaySmall)
+                    }
+                    Text(text = " }", style = MaterialTheme.typography.displaySmall)
+
                 }
             }
         }
@@ -805,79 +675,583 @@ fun Lesson_4Theory(
 fun Lesson_4Practice(
     viewModel: LessonScreenViewModel,
     navController: NavController,
+    darkTheme: Boolean
 ) {
 
-
-    AnimatedVisibility(visible = viewModel.progress == 0f) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        AnimatedVisibility(visible = viewModel.zadan == 1) {
             val radioButtons = remember {
                 mutableStateListOf(
                     ToggleableInfo(
                         isChecked = false,
-                        text = "Привет"
+                        text = "<<"
                     ),
                     ToggleableInfo(
                         isChecked = false,
-                        text = "Пока"
+                        text = ":"
                     ),
                     ToggleableInfo(
                         isChecked = false,
-                        text = "Как дела?"
+                        text = ";"
+                    ),
+                    ToggleableInfo(
+                        isChecked = false,
+                        text = "!"
                     ),
                 )
             }
-            task_with_a_choise(radioButtons, "привет", 1, viewModel)
-        }
-    }
 
-    AnimatedVisibility(visible = viewModel.progress == 0.1f) {
-        var youChoiseState = remember {
-            mutableStateListOf(
-                 "}"
+            task_with_a_choise(
+                radioButtons,
+                "Какой знак ставится в конце инструкции?",
+                2,
+                viewModel
             )
         }
-        val correrct = remember {
-            mutableStateListOf("<<")
-        }
-        lot_of_choise(
-            variantCorrect = correrct,
-            youChoise = youChoiseState,
-            fff = { },
-            varick = viewModel.varick,
-            code = {
-                Row(
-                    modifier = Modifier.padding(vertical = 4.dp, horizontal = 4.dp),
-                ) {
-                    Text(
-                        text = "std::cout  ",
-                        style = MaterialTheme.typography.displaySmall,
-                    )
-                    cartochca(viewModel = viewModel)
 
-                    Text(
-                        text = " \"Hello World!\"",
-                        style = MaterialTheme.typography.displaySmall,
-                        color = string_dark
-
-                    )
-                    Text(
-                        text = ";",
-                        style = MaterialTheme.typography.displaySmall,
-                    )
-                }
+        AnimatedVisibility(visible = viewModel.zadan == 2) {
+            val youChoiseState = remember {
+                mutableStateListOf(
+                    "<<", ";", "{", ";", "}"
+                )
             }
-        )
-    }
-}
+            val correrct = remember {
+                listOf(";", ";")
+            }
 
+            lot_of_choise(
+                variantCorrect = correrct,
+                youChoise = youChoiseState,
+                code = {
+                    Column {
+                        Row {
+                            Row {
+                                Text(
+                                    text = " #include ",
+                                    style = MaterialTheme.typography.displaySmall,
 
-@Preview
-@Composable
-fun ddd() {
-    CAcademyTheme(false) {
-        Lesson_4Theory(darkTheme = false)
+                                    )
+                                Text(
+                                    text = "<iostream>",
+                                    style = MaterialTheme.typography.displaySmall,
+                                    color = if (darkTheme) {
+                                        string_dark
+                                    } else {
+                                        string_light
+                                    }
+                                )
+                            }
+                        }
+                        Text(text = "", style = MaterialTheme.typography.displaySmall)
+                        Row {
+                            Text(
+                                text = " int ",
+                                style = MaterialTheme.typography.displaySmall,
+                                color = if (darkTheme) {
+                                    intov_dark
+                                } else {
+                                    intov_light
+                                }
+                            )
+                            Text(text = "main()", style = MaterialTheme.typography.displaySmall)
+                        }
+                        Text(text = " {", style = MaterialTheme.typography.displaySmall)
+                        Row {
+                            Text(
+                                text = "    std::cout << ",
+                                style = MaterialTheme.typography.displaySmall,
+                            )
+                            Text(
+                                text = " \"Hello World!\"",
+                                style = MaterialTheme.typography.displaySmall,
+                                color = if (darkTheme) {
+                                    string_dark
+                                } else {
+                                    string_light
+                                }
+                            )
+                            cartochca(viewModel = viewModel, index = 0)
+                        }
+                        Row {
+                            Text(
+                                text = "    return ",
+                                style = MaterialTheme.typography.displaySmall,
+                                color = if (darkTheme) {
+                                    helper_dark
+                                } else {
+                                    helper_light
+                                }
+                            )
+                            Text(text = "0", style = MaterialTheme.typography.displaySmall)
+                            cartochca(viewModel = viewModel, index = 1)
+                        }
+                        Text(text = " }", style = MaterialTheme.typography.displaySmall)
+                    }
+                },
+                viewModel, "Закончите инструкции правильными знаками"
+            )
+        }
+
+        AnimatedVisibility(visible = viewModel.zadan == 3) {
+
+            val radioButtons = remember {
+                mutableStateListOf(
+                    ToggleableInfo(
+                        isChecked = false,
+                        text = "{ }"
+                    ),
+                    ToggleableInfo(
+                        isChecked = false,
+                        text = "\" \""
+                    ),
+                    ToggleableInfo(
+                        isChecked = false,
+                        text = "< >"
+                    ),
+                    ToggleableInfo(
+                        isChecked = false,
+                        text = "( )"
+                    )
+                )
+            }
+            task_with_a_choise(radioButtons, "В какие знаки заключается блок кода", 0, viewModel)
+        }
+
+        AnimatedVisibility(visible = viewModel.zadan == 4) {
+            val youChoiseState = remember {
+                mutableStateListOf(
+                    "<<", ";", "{", ";", ">>", "}"
+                )
+            }
+            val correrct = remember {
+                listOf("{", "}")
+            }
+            lot_of_choise(
+                variantCorrect = correrct,
+                youChoise = youChoiseState,
+                code = {
+                    Column {
+                        Row {
+                            Row {
+                                Text(
+                                    text = " #include ",
+                                    style = MaterialTheme.typography.displaySmall,
+
+                                    )
+                                Text(
+                                    text = "<iostream>",
+                                    style = MaterialTheme.typography.displaySmall,
+                                    color = if (darkTheme) {
+                                        string_dark
+                                    } else {
+                                        string_light
+                                    }
+                                )
+                            }
+                        }
+                        Text(text = "", style = MaterialTheme.typography.displaySmall)
+                        Row {
+                            Text(
+                                text = " int ",
+                                style = MaterialTheme.typography.displaySmall,
+                                color = if (darkTheme) {
+                                    intov_dark
+                                } else {
+                                    intov_light
+                                }
+                            )
+                            Text(text = "main()", style = MaterialTheme.typography.displaySmall)
+                        }
+                        cartochca(viewModel = viewModel, index = 0)
+                        Row {
+                            Text(
+                                text = "    std::cout << ",
+                                style = MaterialTheme.typography.displaySmall,
+                            )
+                            Text(
+                                text = " \"Hello World!\"",
+                                style = MaterialTheme.typography.displaySmall,
+                                color = if (darkTheme) {
+                                    string_dark
+                                } else {
+                                    string_light
+                                }
+                            )
+                            Text(
+                                text = ";",
+                                style = MaterialTheme.typography.displaySmall,
+                            )
+                        }
+                        Row {
+                            Text(
+                                text = "    return ",
+                                style = MaterialTheme.typography.displaySmall,
+                                color = if (darkTheme) {
+                                    helper_dark
+                                } else {
+                                    helper_light
+                                }
+                            )
+                            Text(text = "0;", style = MaterialTheme.typography.displaySmall)
+                        }
+                        cartochca(viewModel = viewModel, index = 1)
+                    }
+                },
+                viewModel = viewModel,
+                question = "Заключите блок кода в правильные знаки"
+            )
+        }
+
+        AnimatedVisibility(visible = viewModel.zadan == 5) {
+
+            val radioButtons = remember {
+                mutableStateListOf(
+                    ToggleableInfo(
+                        isChecked = false,
+                        text = "int"
+                    ),
+                    ToggleableInfo(
+                        isChecked = false,
+                        text = "run"
+                    ),
+                    ToggleableInfo(
+                        isChecked = false,
+                        text = "start"
+                    ),
+                    ToggleableInfo(
+                        isChecked = false,
+                        text = "main"
+                    )
+                )
+            }
+            task_with_a_choise(
+                radioButtons,
+                "Как называется, функция с которой начинается выполнение всей программы",
+                3,
+                viewModel
+            )
+        }
+
+        AnimatedVisibility(visible = viewModel.zadan == 6) {
+            val youChoiseState = remember {
+                mutableStateListOf(
+                    "main", "run", "start", "function"
+                )
+            }
+
+            val correrct = remember {
+                listOf("main")
+            }
+            lot_of_choise(
+                variantCorrect = correrct,
+                youChoise = youChoiseState,
+                code = {
+                    Column {
+                        Row {
+                            Row {
+                                Text(
+                                    text = " #include ",
+                                    style = MaterialTheme.typography.displaySmall,
+
+                                    )
+                                Text(
+                                    text = "<iostream>",
+                                    style = MaterialTheme.typography.displaySmall,
+                                    color = if (darkTheme) {
+                                        string_dark
+                                    } else {
+                                        string_light
+                                    }
+                                )
+                            }
+                        }
+                        Text(text = "", style = MaterialTheme.typography.displaySmall)
+                        Row {
+                            Text(
+                                text = " int ",
+                                style = MaterialTheme.typography.displaySmall,
+                                color = if (darkTheme) {
+                                    intov_dark
+                                } else {
+                                    intov_light
+                                }
+                            )
+                            cartochca(viewModel = viewModel, index = 0)
+                            Text(text = "()", style = MaterialTheme.typography.displaySmall)
+                        }
+                        Text(text = " {", style = MaterialTheme.typography.displaySmall)
+                        Row {
+                            Text(
+                                text = "    std::cout << ",
+                                style = MaterialTheme.typography.displaySmall,
+                            )
+                            Text(
+                                text = " \"Hello World!\"",
+                                style = MaterialTheme.typography.displaySmall,
+                                color = if (darkTheme) {
+                                    string_dark
+                                } else {
+                                    string_light
+                                }
+                            )
+                            Text(
+                                text = ";",
+                                style = MaterialTheme.typography.displaySmall,
+                            )
+                        }
+                        Row {
+                            Text(
+                                text = "    return ",
+                                style = MaterialTheme.typography.displaySmall,
+                                color = if (darkTheme) {
+                                    helper_dark
+                                } else {
+                                    helper_light
+                                }
+                            )
+                            Text(text = "0;", style = MaterialTheme.typography.displaySmall)
+                        }
+                        Text(text = " }", style = MaterialTheme.typography.displaySmall)
+                    }
+                },
+                viewModel = viewModel,
+                question = "Дайте название функции, которая запустит программу"
+            )
+
+        }
+
+        AnimatedVisibility(visible = viewModel.zadan == 7) {
+            val radioButtons = remember {
+                mutableStateListOf(
+                    ToggleableInfo(
+                        isChecked = false,
+                        text = "include"
+                    ),
+                    ToggleableInfo(
+                        isChecked = false,
+                        text = "define"
+                    ),
+                    ToggleableInfo(
+                        isChecked = false,
+                        text = "error"
+                    )
+                )
+            }
+            task_with_a_choise(
+                radioButtons,
+                "Как нызывается директива подключения библиотек и сторонних файлов",
+                0,
+                viewModel
+            )
+        }
+
+        AnimatedVisibility(viewModel.zadan == 8) {
+            val youChoiceState = remember {
+                mutableStateListOf(
+                    "#", "iostream", ">", "<", "}", "{", "include"
+                )
+            }
+            val correrct = remember {
+                listOf("#", "include", "<", "iostream", ">")
+            }
+            lot_of_choise(
+                variantCorrect = correrct,
+                youChoise = youChoiceState,
+                code = {
+                    Column {
+                        Row {
+                            cartochca(viewModel = viewModel, index = 0)
+                            Spacer(modifier = Modifier.size(4.dp))
+                            cartochca(viewModel = viewModel, index = 1)
+                            Spacer(modifier = Modifier.size(4.dp))
+                            cartochca(viewModel = viewModel, index = 2)
+                            Spacer(modifier = Modifier.size(4.dp))
+                            cartochca(viewModel = viewModel, index = 3)
+                            Spacer(modifier = Modifier.size(4.dp))
+                            cartochca(viewModel = viewModel, index = 4)
+                        }
+                        Text(text = "", style = MaterialTheme.typography.displaySmall)
+                        Row {
+                            Text(
+                                text = " int ",
+                                style = MaterialTheme.typography.displaySmall,
+                                color = if (darkTheme) {
+                                    intov_dark
+                                } else {
+                                    intov_light
+                                }
+                            )
+                            Text(text = "main()", style = MaterialTheme.typography.displaySmall)
+                        }
+                        Text(text = " {", style = MaterialTheme.typography.displaySmall)
+                        Row {
+                            Text(
+                                text = "    std::cout << ",
+                                style = MaterialTheme.typography.displaySmall,
+                            )
+                            Text(
+                                text = " \"Hello World!\"",
+                                style = MaterialTheme.typography.displaySmall,
+                                color = if (darkTheme) {
+                                    string_dark
+                                } else {
+                                    string_light
+                                }
+                            )
+                            Text(
+                                text = ";",
+                                style = MaterialTheme.typography.displaySmall,
+                            )
+                        }
+                        Row {
+                            Text(
+                                text = "    return ",
+                                style = MaterialTheme.typography.displaySmall,
+                                color = if (darkTheme) {
+                                    helper_dark
+                                } else {
+                                    helper_light
+                                }
+                            )
+                            Text(text = "0;", style = MaterialTheme.typography.displaySmall)
+                        }
+                        Text(text = " }", style = MaterialTheme.typography.displaySmall)
+                    }
+                },
+                viewModel = viewModel,
+                question = "Подключите библиотеку iostream"
+            )
+        }
+
+        AnimatedVisibility(visible = viewModel.zadan == 9) {
+            val radioButtons = remember {
+                mutableStateListOf(
+                    ToggleableInfo(
+                        isChecked = false,
+                        text = "< и >"
+                    ),
+                    ToggleableInfo(
+                        isChecked = false,
+                        text = "# и <<"
+                    ),
+                    ToggleableInfo(
+                        isChecked = false,
+                        text = "// и /* */"
+                    ),
+                )
+            }
+            task_with_a_choise(
+                radioButtons,
+                "Укажите знаки, которые используются для комментирования строк",
+                2,
+                viewModel
+            )
+        }
+
+        AnimatedVisibility(viewModel.zadan == 10) {
+            val youChoiseState = remember {
+                mutableStateListOf(
+                    "//", ";", "*/", ">>", "/*"
+                )
+            }
+            val correrct = remember {
+                listOf("/*", "*/", "//")
+            }
+
+            lot_of_choise(
+                variantCorrect = correrct,
+                youChoise = youChoiseState,
+                code = {
+                    Column {
+                        Row {
+                            Row {
+                                Text(
+                                    text = " #include ",
+                                    style = MaterialTheme.typography.displaySmall,
+
+                                    )
+                                Text(
+                                    text = "<iostream>",
+                                    style = MaterialTheme.typography.displaySmall,
+                                    color = if (darkTheme) {
+                                        string_dark
+                                    } else {
+                                        string_light
+                                    }
+                                )
+                            }
+                        }
+                        cartochca(viewModel = viewModel, index = 0)
+                        Text(
+                            text = "Закоментируйте эту строку",
+                            style = MaterialTheme.typography.displaySmall,
+                            color = if (darkTheme) {
+                                comment_dark
+                            } else {
+                                comment_light
+                            }
+                        )
+                        cartochca(viewModel = viewModel, index = 1)
+                        Row {
+                            Text(
+                                text = " int ",
+                                style = MaterialTheme.typography.displaySmall,
+                                color = if (darkTheme) {
+                                    intov_dark
+                                } else {
+                                    intov_light
+                                }
+                            )
+                            Text(text = "main()", style = MaterialTheme.typography.displaySmall)
+                        }
+                        Text(text = " {", style = MaterialTheme.typography.displaySmall)
+                        Row {
+                            Text(
+                                text = "    std::cout << ",
+                                style = MaterialTheme.typography.displaySmall,
+                            )
+                            Text(
+                                text = " \"Hello World!\"",
+                                style = MaterialTheme.typography.displaySmall,
+                                color = if (darkTheme) {
+                                    string_dark
+                                } else {
+                                    string_light
+                                }
+                            )
+                            Text(
+                                text = ";",
+                                style = MaterialTheme.typography.displaySmall,
+                            )
+                            cartochca(viewModel = viewModel, index = 2)
+                            Text(text = "вывод", style = MaterialTheme.typography.displaySmall, color = if(darkTheme) {comment_dark} else {comment_light})
+                        }
+                        Row {
+                            Text(
+                                text = "    return ",
+                                style = MaterialTheme.typography.displaySmall,
+                                color = if (darkTheme) {
+                                    helper_dark
+                                } else {
+                                    helper_light
+                                }
+                            )
+                            Text(text = "0;", style = MaterialTheme.typography.displaySmall)
+                        }
+                        Text(text = " }", style = MaterialTheme.typography.displaySmall)
+
+                    }
+                },
+                viewModel = viewModel,
+                question = "закоментируйте нужные строки правильно"
+            )
+        }
+        if (viewModel.zadan > 10) {
+            viewModel.update(LessonDestination.idlesson + 1, LessonDestination.idlesson)
+            navController.navigate(FinishDestination.route)
+        }
     }
 }

@@ -97,7 +97,6 @@ fun ScreenApp(
     val scope = rememberCoroutineScope()
     var selectedItemIndex by rememberSaveable { mutableIntStateOf(0) }
 
-
     //боковое меню навигации в самом приложении
     ModalNavigationDrawer(
         drawerContent = {
@@ -151,16 +150,10 @@ fun ScreenApp(
         },
         drawerState = drawerState,
         gesturesEnabled = false
-
-
     ) {
-
-
         Scaffold(
-
             topBar = {
                 //верхняя информационная панель, отсюда вызывается глобальное меню в приложении
-
                 Beautiful_app_bar(
                     drawerState = drawerState,
                     scope = scope,
@@ -207,10 +200,6 @@ fun ScreenApp(
 
 
             ) {
-
-                //systemUiController.isNavigationBarVisible = false
-
-
                 //экран модулей
                 composable(route = ModuleDestination.route) {
                     gameviewModel.bottomBarState = true
@@ -236,7 +225,6 @@ fun ScreenApp(
                         viewModel = gameviewModel
                     )
                 }
-
                 //экран прогресса
                 composable(route = ProgressDestination.route) {
                     gameviewModel.bottomBarState = true
@@ -257,13 +245,11 @@ fun ScreenApp(
                         darkTheme = darkTheme
                     )
                 }
-
                 composable(route = FinishDestination.route) {
                     gameviewModel.bottomBarState = false
                     gameviewModel.topBarState = false
                     FinishScreen(navController = navController)
                 }
-
             }
         }
     }

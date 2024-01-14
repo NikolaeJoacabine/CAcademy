@@ -4,7 +4,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,8 +13,11 @@ import kotlinx.coroutines.launch
 class LessonScreenViewModel(private val lessonRepository: LessonRepository): ViewModel() {
     var selectTabIndex by mutableIntStateOf(0) //для переключения слайдов
     var progress by  mutableFloatStateOf(0f)//отображение для анимации прогресса
+    var zadan by mutableIntStateOf(1)
 
     val varick: MutableList<String> = mutableStateListOf()//тута мы сохраняем ответы пользователя, очистка происходит после каждого задания с типом выбора карточек
+
+    val uuu: MutableList<Int> = mutableStateListOf()
 
      fun update(pass: Int, yes: Int){
          viewModelScope.launch {
