@@ -708,7 +708,8 @@ fun Lesson_4Practice(
                 radioButtons,
                 "Какой знак ставится в конце инструкции?",
                 2,
-                viewModel
+                viewModel,
+                prog = 0.1f
             )
         }
 
@@ -791,7 +792,8 @@ fun Lesson_4Practice(
                         Text(text = " }", style = MaterialTheme.typography.displaySmall)
                     }
                 },
-                viewModel, "Закончите инструкции правильными знаками"
+                viewModel, "Закончите инструкции правильными знаками",
+                prog = 0.1f
             )
         }
 
@@ -817,7 +819,7 @@ fun Lesson_4Practice(
                     )
                 )
             }
-            task_with_a_choise(radioButtons, "В какие знаки заключается блок кода", 0, viewModel)
+            task_with_a_choise(radioButtons, "В какие знаки заключается блок кода", 0, viewModel, prog = 0.1f)
         }
 
         AnimatedVisibility(visible = viewModel.zadan == 4) {
@@ -901,7 +903,8 @@ fun Lesson_4Practice(
                     }
                 },
                 viewModel = viewModel,
-                question = "Заключите блок кода в правильные знаки"
+                question = "Заключите блок кода в правильные знаки",
+                prog = 0.1f
             )
         }
 
@@ -931,7 +934,8 @@ fun Lesson_4Practice(
                 radioButtons,
                 "Как называется, функция с которой начинается выполнение всей программы",
                 3,
-                viewModel
+                viewModel,
+                prog = 0.1f
             )
         }
 
@@ -1018,7 +1022,8 @@ fun Lesson_4Practice(
                     }
                 },
                 viewModel = viewModel,
-                question = "Дайте название функции, которая запустит программу"
+                question = "Дайте название функции, которая запустит программу",
+                prog = 0.1f
             )
 
         }
@@ -1044,7 +1049,8 @@ fun Lesson_4Practice(
                 radioButtons,
                 "Как нызывается директива подключения библиотек и сторонних файлов",
                 0,
-                viewModel
+                viewModel,
+                prog = 0.1f
             )
         }
 
@@ -1122,7 +1128,8 @@ fun Lesson_4Practice(
                     }
                 },
                 viewModel = viewModel,
-                question = "Подключите библиотеку iostream"
+                question = "Подключите библиотеку iostream",
+                prog = 0.1f
             )
         }
 
@@ -1147,7 +1154,8 @@ fun Lesson_4Practice(
                 radioButtons,
                 "Укажите знаки, которые используются для комментирования строк",
                 2,
-                viewModel
+                viewModel,
+                prog = 0.1f
             )
         }
 
@@ -1246,7 +1254,8 @@ fun Lesson_4Practice(
                     }
                 },
                 viewModel = viewModel,
-                question = "закоментируйте нужные строки правильно"
+                question = "закоментируйте нужные строки правильно",
+                prog = 0.1f
             )
         }
         if (viewModel.zadan > 10) {

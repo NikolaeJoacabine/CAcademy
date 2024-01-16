@@ -35,7 +35,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.nikolaej.cacademy.tipsTasck.Cmain
+import com.nikolaej.cacademy.tipsTasck.ToggleableInfo
+import com.nikolaej.cacademy.tipsTasck.cartochca
+import com.nikolaej.cacademy.tipsTasck.include
 import com.nikolaej.cacademy.tipsTasck.lot_of_choise
+import com.nikolaej.cacademy.tipsTasck.task_with_a_choise
+import com.nikolaej.cacademy.ui.screen.FinishDestination
 import com.nikolaej.cacademy.ui.screen.LessonDestination
 import com.nikolaej.cacademy.ui.screen.LessonScreenViewModel
 import com.nikolaej.cacademy.ui.theme.CAcademyTheme
@@ -1535,20 +1541,202 @@ fun Lesson4Practice(
         AnimatedVisibility(visible = viewModel.zadan == 1) {
             val youChoiseState = remember {
                 mutableStateListOf(
-                    "<<", ";", "{", ";", "}"
+                    "int", ";", "distance", "<<", "}"
                 )
             }
             val correrct = remember {
-                listOf(";", ";")
+                listOf("int", "distance", ";")
             }
             lot_of_choise(
                 variantCorrect = correrct,
                 youChoise = youChoiseState,
-                code = { /*TODO*/ },
+                code = {
+                    Column {
+                        include(darkTheme = darkTheme)
+                        Cmain(darkTheme = darkTheme)
+                        Text(text = "{", style = MaterialTheme.typography.displaySmall)
+                        Row {
+                            cartochca(viewModel = viewModel, index = 0)
+                            cartochca(viewModel = viewModel, index = 1)
+                            cartochca(viewModel = viewModel, index = 2)
+                        }
+                        Text(text = "}", style = MaterialTheme.typography.displaySmall)
+                    }
+                },
                 viewModel = viewModel,
-                question = "ghghgh"
+                question = "определите правильно целоцисленную переменную distance",
+                prog = 0.25f
             )
+        }
+        AnimatedVisibility(visible = viewModel.zadan == 2) {
+            val radioButtons = remember {
+                mutableStateListOf(
+                    ToggleableInfo(
+                        isChecked = false,
+                        text = "1age"
+                    ),
+                    ToggleableInfo(
+                        isChecked = false,
+                        text = "ag e"
+                    ),
+                    ToggleableInfo(
+                        isChecked = false,
+                        text = "age"
+                    )
+                )
+            }
+
+            task_with_a_choise(
+                radioButtons,
+                "Выберите допустимое имя переменной",
+                2,
+                viewModel,
+                prog = 0.25f
+            )
+        }
+        AnimatedVisibility(visible = viewModel.zadan == 3) {
+            val radioButtons = remember {
+                mutableStateListOf(
+                    ToggleableInfo(
+                        isChecked = false,
+                        text = "Да"
+                    ),
+                    ToggleableInfo(
+                        isChecked = false,
+                        text = "Нет"
+                    )
+                )
+            }
+
+            task_with_a_choise(
+                radioButtons,
+                "можно ли инициализировать сразу несколько переменных?",
+                0,
+                viewModel,
+                prog = 0.25f
+            )
+        }
+        AnimatedVisibility(visible = viewModel.zadan == 4) {
+            val youChoiseState = remember {
+                mutableStateListOf(
+                    ")", "age1", "=",  "}", "<<","{", "("
+                )
+            }
+            val correrct = remember {
+                listOf("age1", "=", "{", "}", "(", ")")
+            }
+            lot_of_choise(
+                variantCorrect = correrct,
+                youChoise = youChoiseState,
+                code = {
+                    Column {
+                        include(darkTheme = darkTheme)
+                        Cmain(darkTheme = darkTheme)
+                        Text(text = "{", style = MaterialTheme.typography.displaySmall)
+                        Row {
+                            Text(
+                                text = "    int",
+                                style = MaterialTheme.typography.displaySmall,
+                                color = if (darkTheme) {
+                                    intov_dark
+                                } else {
+                                    intov_light
+                                }
+                            )
+                            Text(
+                                text = " age1;",
+                                style = MaterialTheme.typography.displaySmall,
+                                color = if (darkTheme) {
+                                    peremenna_dark
+                                } else {
+                                    peremenna_light
+                                }
+                            )
+                        }
+                        Row{
+                            Text(
+                                text = "    ",
+                                style = MaterialTheme.typography.displaySmall)
+                            cartochca(viewModel = viewModel, index = 0)
+                            cartochca(viewModel = viewModel, index = 1)
+                            Text(
+                                text = "23;",
+                                style = MaterialTheme.typography.displaySmall)
+                        }
+
+                        Row {
+                            Text(
+                                text = "    int",
+                                style = MaterialTheme.typography.displaySmall,
+                                color = if (darkTheme) {
+                                    intov_dark
+                                } else {
+                                    intov_light
+                                }
+                            )
+                            Text(
+                                text = " age2 ",
+                                style = MaterialTheme.typography.displaySmall,
+                                color = if (darkTheme) {
+                                    peremenna_dark
+                                } else {
+                                    peremenna_light
+                                }
+                            )
+                            cartochca(viewModel = viewModel, index = 2)
+                            Text(
+                                text = " 25 ",
+                                style = MaterialTheme.typography.displaySmall
+                            )
+                            cartochca(viewModel = viewModel, index = 3)
+                            Text(
+                                text = ";",
+                                style = MaterialTheme.typography.displaySmall
+                            )
+                        }
+                        Row {
+                            Text(
+                                text = "    int",
+                                style = MaterialTheme.typography.displaySmall,
+                                color = if (darkTheme) {
+                                    intov_dark
+                                } else {
+                                    intov_light
+                                }
+                            )
+                            Text(
+                                text = " age3 ",
+                                style = MaterialTheme.typography.displaySmall,
+                                color = if (darkTheme) {
+                                    peremenna_dark
+                                } else {
+                                    peremenna_light
+                                }
+                            )
+                            cartochca(viewModel = viewModel, index = 4)
+                            Text(
+                                text = " 29 ",
+                                style = MaterialTheme.typography.displaySmall
+                            )
+                            cartochca(viewModel = viewModel, index = 5)
+                            Text(
+                                text = ";",
+                                style = MaterialTheme.typography.displaySmall
+                            )
+                        }
+
+
+                        Text(text = "}", style = MaterialTheme.typography.displaySmall)
+                    }
+                },
+                viewModel = viewModel,
+                question = "Инициализируйте первую переменную при помощи нотации присвания, вторую с помощью функциональной нотации, и третью при помощи инициализации в фигурных скобках.",
+                prog = 0.25f
+            )
+        }
+        if (viewModel.zadan > 4) {
+            viewModel.update(LessonDestination.idlesson + 1, LessonDestination.idlesson)
+            navController.navigate(FinishDestination.route)
         }
     }
 }
-

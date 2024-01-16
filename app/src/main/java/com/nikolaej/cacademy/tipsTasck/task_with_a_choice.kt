@@ -59,7 +59,7 @@ fun task_with_a_choise(
     question: String,
     count: Int,
     viewModel: LessonScreenViewModel,
-    prog: Float = 0.1f
+    prog: Float
 ) {
     val sheetState = rememberModalBottomSheetState()
     var isSheetOpen by rememberSaveable {
@@ -150,7 +150,7 @@ fun task_with_a_choise(
             onDismissRequest = {
                 if(name[count].isChecked){
                     isSheetOpen = false
-                    viewModel.progress += prog
+                    viewModel.proff(prog)
                     viewModel.zadan += 1
                 } else {
                     isSheetOpen = false
@@ -180,7 +180,7 @@ fun task_with_a_choise(
                         Button(
                             onClick = {
                                 isSheetOpen = false
-                                viewModel.progress += 0.1f
+                                viewModel.proff(prog)
                                 viewModel.zadan += 1
                             },
                             modifier = Modifier.fillMaxWidth(),

@@ -25,4 +25,7 @@ class LessonScreenViewModel(private val lessonRepository: LessonRepository): Vie
              lessonRepository.updateYes(yes)
          }
     }
+    fun proff(prog: Float){
+        progress += prog
+    }
 }

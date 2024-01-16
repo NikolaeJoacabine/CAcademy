@@ -23,9 +23,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Backspace
+import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.Replay
 import androidx.compose.material.icons.sharp.Info
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -38,6 +40,7 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -71,7 +74,7 @@ fun lot_of_choise(
     code: @Composable (() -> Unit)?,
     viewModel: LessonScreenViewModel,
     question: String,
-    prog: Float = 0.1f
+    prog: Float
 ) {
 
 
@@ -85,6 +88,9 @@ fun lot_of_choise(
 
     var animation by remember {
         mutableFloatStateOf(0f)
+    }
+    var isOpen by rememberSaveable {
+        mutableStateOf(false)
     }
 
     val progressAnimation by animateFloatAsState(
@@ -101,7 +107,7 @@ fun lot_of_choise(
         Column(
             Modifier.padding(4.dp)
         ) {
-            Text(text = question, style = MaterialTheme.typography.displaySmall)
+            Text(text = question, style = MaterialTheme.typography.bodySmall)
         }
         Column(
             Modifier
@@ -130,6 +136,9 @@ fun lot_of_choise(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.padding(horizontal = 4.dp, vertical = 6.dp)
                     ) {
+                        IconButton(onClick = { isOpen = true }) {
+                            Icon(imageVector = Icons.Rounded.Info, contentDescription = null)
+                        }
                         IconButton(onClick = {
                             if (viewModel.varick.isNotEmpty()) {
                                 viewModel.uuu.clear()
@@ -264,6 +273,12 @@ fun lot_of_choise(
             }
         }
 
+        if (isOpen){
+            Dialog(onCancel = {
+                 isOpen = false
+            })
+        }
+
         if (isSheetOpen) {
             animation = 1f
             ModalBottomSheet(
@@ -272,8 +287,8 @@ fun lot_of_choise(
                     if (variantCorrect == viewModel.varick) {
                         viewModel.uuu.clear()
                         isSheetOpen = false
-                        viewModel.progress += prog
-                        viewModel.progress +=1
+                        viewModel.proff(prog)
+                        viewModel.progress += 1
 
                     } else {
                         viewModel.varick.clear()
@@ -306,7 +321,7 @@ fun lot_of_choise(
                                 viewModel.uuu.clear()
                                 viewModel.varick.clear()
                                 isSheetOpen = false
-                                viewModel.progress += prog
+                                viewModel.proff(prog)
                                 viewModel.zadan += 1
                             },
                             modifier = Modifier.fillMaxWidth(),
@@ -350,7 +365,22 @@ fun lot_of_choise(
     }
 }
 
-
+@Composable
+fun Dialog(
+    onCancel: () -> Unit,
+) {
+    AlertDialog(onDismissRequest = { onCancel() },
+        title = {  },
+        text = { Text("Чтобы выполнить данное задание, нужно нажать на элементы, которые находятся ниже, в нужном порядке") },
+        dismissButton = {
+            TextButton(onClick = onCancel) {
+                Text(text = "Понятно")
+            }
+        },
+        confirmButton = {
+        }
+    )
+}
 @Composable
 fun cartochca(
     viewModel: LessonScreenViewModel,
