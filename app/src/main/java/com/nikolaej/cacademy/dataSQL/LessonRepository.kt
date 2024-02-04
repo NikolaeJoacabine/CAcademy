@@ -8,6 +8,4 @@ interface LessonRepository {
     suspend fun updateYes(id: Int)
     suspend fun updatePass(id: Int)
     suspend fun getProgress(): Int
-    suspend fun counttt(name: String): Int
-    suspend fun progress(name: String):Int
 }

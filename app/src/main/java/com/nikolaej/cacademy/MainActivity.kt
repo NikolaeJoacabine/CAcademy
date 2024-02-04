@@ -18,7 +18,7 @@ import com.nikolaej.cacademy.ui.theme.CAcademyTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         setContent {
 
             val Theme = isSystemInDarkTheme()

@@ -5,16 +5,24 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
@@ -28,9 +36,7 @@ import com.nikolaej.cacademy.ui.CAcademyViewModel
 import com.nikolaej.cacademy.ui.navigation.NavigationDestination
 
 
-object ModuleDestination : NavigationDestination {
-    override val route = "Module"
-}
+
 
 @Composable
 fun ModuleScreen(
@@ -49,8 +55,7 @@ fun ModuleScreen(
 
         ModuleList(
             moduleList = module.moduleList,
-            onModuleClick = { navigateToItemUpdate() },
-
+            onModuleClick = { navigateToItemUpdate() }
         )
     }
 }
@@ -64,8 +69,11 @@ private fun ModuleList(
     val haptic = LocalHapticFeedback.current
     var sosto: String? = ""
 
+
     LazyColumn(
-        modifier = Modifier.fillMaxSize().padding(end =  8.dp)
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(end = 8.dp)
     ) {
         items(
             items = moduleList,
@@ -73,6 +81,7 @@ private fun ModuleList(
         ) { module ->
 
             if (sosto != module.nameModule) {
+
                 ModuleCard(
                     name = module.nameModule,
                     modifier = Modifier
@@ -93,15 +102,19 @@ private fun ModuleList(
 @Composable
 fun ModuleCard(
     name: String,
-    modifier: Modifier
+    modifier: Modifier,
+
 ) {
+
 
     Card(
         modifier = modifier
     ) {
-        Text(
-            text = name,
-            modifier = Modifier.padding(4.dp),
-        )
+
+            Text(
+                text = name,
+                modifier = Modifier.padding(4.dp),
+            )
+
     }
 }

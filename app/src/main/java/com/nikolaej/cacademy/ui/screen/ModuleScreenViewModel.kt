@@ -27,13 +27,7 @@ class ModuleScreenViewModel(private val lessonRepository: LessonRepository) : Vi
     companion object {
         private const val TIMEOUT_MILLIS = 5_000L
     }
-    private var progress by mutableFloatStateOf(0f)
-    fun count(name:String) : Float {
-        viewModelScope.launch {
-            progress = lessonRepository.progress(name).toFloat()/lessonRepository.counttt(name).toFloat()
-        }
-        return progress
-    }
+
 
 }
 

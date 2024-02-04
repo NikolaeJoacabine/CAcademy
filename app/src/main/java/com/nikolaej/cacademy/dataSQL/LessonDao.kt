@@ -45,21 +45,4 @@ interface LessonDao{
         """
     )
     suspend fun getProgress():Int
-
-    @Query(
-        """
-            SELECT COUNT(*) FROM lesson
-            where nameModule = :name
-        """
-    )
-    suspend fun counttt(name:String): Int
-
-    @Query(
-        """
-            SELECT COUNT(:name) FROM lesson
-            where Yes = 1
-        """
-    )
-    suspend fun progress(name: String):Int
-
 }

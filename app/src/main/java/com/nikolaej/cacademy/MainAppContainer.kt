@@ -6,11 +6,16 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -18,8 +23,11 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Book
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -35,6 +43,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
@@ -73,19 +82,12 @@ fun ScreenApp(
     val paddingValue = WindowInsets.systemBars.asPaddingValues()
 
     val navBackStackEntry by navController.currentBackStackEntryAsState() //получаем в текстовом виде название страницы
-    val sheetState = rememberModalBottomSheetState()
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
     Scaffold(
         topBar = {
             //верхняя информационная панель, отсюда вызывается глобальное меню в приложении
             Beautiful_app_bar(
-                currentScreenTitle = when (navBackStackEntry?.destination?.route) {
-                    "FullLesson" -> "Уроки"
-                    "Module" -> "Модули"
-                    "Settings" -> "Настройки"
-                    "Progress" -> "Прогресс"
-                    else -> ""
-                },
                 navBackStackEntry = navBackStackEntry,
                 navController = navController,
                 gameviewModel = gameviewModel
@@ -164,12 +166,21 @@ fun ScreenApp(
             sheetState = sheetState,
             onDismissRequest = { gameviewModel.IndexModalBottomSheets = false }
         ) {
-            ModuleScreen(
-                navigateToItemUpdate = {
-                    gameviewModel.IndexModalBottomSheets = false
-                    navController.navigate(LessonsDestination.route)
-                },
-            )
+            Column(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Text(
+                    text = "Выберите модуль",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                ModuleScreen(
+                    navigateToItemUpdate = {
+                        gameviewModel.IndexModalBottomSheets = false
+                        navController.navigate(LessonsDestination.route)
+                    },
+                )
+            }
         }
     }
 }
@@ -178,7 +189,6 @@ fun ScreenApp(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun Beautiful_app_bar(
-    currentScreenTitle: String,
     navBackStackEntry: NavBackStackEntry?,
     navController: NavHostController,
     gameviewModel: CAcademyViewModel
@@ -198,17 +208,75 @@ private fun Beautiful_app_bar(
         //верхняя панель
         TopAppBar(
             title = {
-                Text(text = currentScreenTitle)
-            },
-            //что делает кнопка
-            navigationIcon = {
-                IconButton(onClick = {
-                    gameviewModel.IndexModalBottomSheets = true
+                if (navBackStackEntry?.destination?.route == "FullLesson") {
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(text = "Уроки")
+                        Spacer(modifier = Modifier.weight(1f))
+                        IconButton(
+                            onClick = {
+                                gameviewModel.IndexModalBottomSheets = true
+                            },
+                            modifier = Modifier.padding(horizontal = 4.dp)
+                        ) {
+                            Row(
+                                horizontalArrangement = Arrangement.Center,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Menu, contentDescription = null
+                                )
+                            }
+                        }
+                    }
                 }
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Menu, contentDescription = null
-                    )
+                if (navBackStackEntry?.destination?.route == "Progress") {
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(text = "Профиль")
+                        Spacer(modifier = Modifier.weight(1f))
+                        IconButton(
+                            onClick = {
+                                navController.navigate(SettingsDestination.route)
+                            },
+                            modifier = Modifier.padding(horizontal = 4.dp)
+                        ) {
+                            Row(
+                                horizontalArrangement = Arrangement.Center,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Settings, contentDescription = null
+                                )
+                            }
+                        }
+                    }
+                }
+                if (navBackStackEntry?.destination?.route == "Settings") {
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(text = "Настройки")
+                    }
+                }
+            },
+            navigationIcon = {
+                if (navBackStackEntry?.destination?.route == "Settings") {
+                    IconButton(
+                        onClick = {
+                            navController.popBackStack(ProgressDestination.route, inclusive = false)
+                        }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack, contentDescription = null
+                        )
+                    }
+                    Spacer(modifier = Modifier.size(4.dp))
                 }
             },
             scrollBehavior = scrollBehavior,
@@ -236,7 +304,7 @@ private fun Very_beautiful_control_panel(
             targetOffsetY = { fullHeight -> fullHeight })
     ) {
         AnimatedNavigationBar(
-            modifier = Modifier.height(75.dp + ppp.calculateBottomPadding()),
+            modifier = Modifier.height(75.dp),
             selectedIndex = gameviewModel.selectedIndex,
             cornerRadius = shapeCornerRadius(30.dp, 30.dp, 0.dp, 0.dp),
             ballAnimation = Parabolic(tween(600)),
@@ -250,9 +318,7 @@ private fun Very_beautiful_control_panel(
                 modifier = Modifier
                     .fillMaxSize()
                     .noRippleClickable {
-
                         navController.popBackStack(LessonsDestination.route, inclusive = false)
-
                     },
                 contentAlignment = Alignment.Center
             ) {

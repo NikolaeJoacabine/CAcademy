@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Lesson::class, User::class], version = 1 )
+@Database(entities = [Lesson::class], version = 1 )
 abstract class LessonDatabase: RoomDatabase() {
     abstract fun lessonDao(): LessonDao
 

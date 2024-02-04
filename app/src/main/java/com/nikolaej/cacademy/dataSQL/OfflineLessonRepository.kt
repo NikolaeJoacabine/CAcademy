@@ -13,6 +13,4 @@ class OfflineLessonRepository(private val lessonDao: LessonDao):LessonRepository
 
     override suspend fun getProgress(): Int = lessonDao.getProgress()
 
-    override suspend fun counttt(name: String): Int = lessonDao.counttt(name)
-    override suspend fun progress(name: String): Int = lessonDao.progress(name)
 }

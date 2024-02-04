@@ -81,7 +81,7 @@ fun LessonScreenCard(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Вы не выбрали модуль, чтобы отобразить уроки",
+                text = "Выберите модуль в верхней части экрана, чтобы отобразить уроки",
                 textAlign = TextAlign.Center
             )
         }
@@ -142,9 +142,6 @@ fun LessonScreenCard(
         }
     }
 
-
-
-
     if (isSheetOpen) {
         DialogWithImage(
             onDismissRequest = { isSheetOpen = false },
@@ -154,8 +151,6 @@ fun LessonScreenCard(
             id = id
         )
     }
-
-
 
     if (!pass1) {
         haptic.performHapticFeedback(HapticFeedbackType.LongPress)

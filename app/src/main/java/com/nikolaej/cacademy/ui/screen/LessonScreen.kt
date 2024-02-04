@@ -239,7 +239,9 @@ fun LessonScreen(
         TabRow(
             selectedTabIndex = viewModel.selectTabIndex,
             indicator = indicator,
-            divider = {}
+            divider = {},
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            modifier = Modifier.clip(shape = RoundedCornerShape(0.dp, 0.dp, 15.dp, 15.dp))
         ) {
             tabItem.forEachIndexed { index, title ->
                 Tab(
@@ -680,7 +682,7 @@ private fun CustomIndicator(tabPositions: List<TabPosition>, pagerState: PagerSt
             .padding(2.dp)
             .fillMaxSize()
             .border(
-                BorderStroke(2.dp, MaterialTheme.colorScheme.secondaryContainer),
+                BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
                 RoundedCornerShape(50)
             )
             .zIndex(1f)
