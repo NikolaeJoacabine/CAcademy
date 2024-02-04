@@ -9,13 +9,14 @@ import androidx.lifecycle.ViewModel
 
 
 class CAcademyViewModel: ViewModel() {
-    var selectedIndex by mutableStateOf(0)
+    var selectedIndex by mutableIntStateOf(0)
         internal set
+
     var topBarState by mutableStateOf (true)
+
     var bottomBarState by mutableStateOf (true)
+
+    var IndexModalBottomSheets by mutableStateOf(false)
 
 
 }
-
-
-

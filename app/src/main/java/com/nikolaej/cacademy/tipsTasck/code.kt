@@ -44,3 +44,11 @@ fun Cmain(darkTheme: Boolean){
         Text(text = "main()", style = MaterialTheme.typography.displaySmall)
     }
 }
+
+@Composable
+fun Cout(){
+    Text(
+        text = "    std::cout << ",
+        style = MaterialTheme.typography.displaySmall,
+    )
+}

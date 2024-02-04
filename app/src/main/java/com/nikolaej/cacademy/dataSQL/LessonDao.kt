@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface LessonDao{
     @Query("""
-        SELECT  * FROM lesson;
+        SELECT Distinct(nameModule), * FROM lesson;
     """)
     fun getAllModule(): Flow<List<Lesson>>
 

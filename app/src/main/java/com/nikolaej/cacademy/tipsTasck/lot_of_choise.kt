@@ -297,7 +297,7 @@ fun lot_of_choise(
                         animation = 0f
                     }
                 },
-                dragHandle = {},
+                dragHandle = null,
                 shape = RoundedCornerShape(0.dp)
             ) {
                 if (variantCorrect == viewModel.varick) {

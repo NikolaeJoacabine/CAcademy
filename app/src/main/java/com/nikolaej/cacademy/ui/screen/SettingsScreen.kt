@@ -43,6 +43,11 @@ fun SettingsScreen(
                 haptic.performHapticFeedback(HapticFeedbackType.LongPress)
             })
         }
+        Row(
+
+        ){
+            
+        }
     }
 
 }

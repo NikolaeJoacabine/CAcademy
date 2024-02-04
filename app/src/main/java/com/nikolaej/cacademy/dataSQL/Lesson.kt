@@ -19,5 +19,5 @@ data class Lesson(
 data class User(
     @PrimaryKey
     val id: Int,
-    val nameUser: String
+    val nameLesson: String
 )

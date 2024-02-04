@@ -24,12 +24,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.exyte.animatednavbar.utils.noRippleClickable
 import com.nikolaej.cacademy.dataSQL.Lesson
 import com.nikolaej.cacademy.ui.AppViewModelProvider
+import com.nikolaej.cacademy.ui.CAcademyViewModel
 import com.nikolaej.cacademy.ui.navigation.NavigationDestination
 
 
-object ModuleDestination : NavigationDestination{
+object ModuleDestination : NavigationDestination {
     override val route = "Module"
 }
+
 @Composable
 fun ModuleScreen(
     moduleViewModel: ModuleScreenViewModel = viewModel(factory = AppViewModelProvider.Factory),
@@ -43,31 +45,27 @@ fun ModuleScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier.fillMaxSize()
-        ) {
+    ) {
 
-        AnimatedVisibility(
-            visible = module.moduleList.isNotEmpty(),
-            enter = fadeIn(tween(1000))
-            ) {
-            ModuleList(
-                moduleList = module.moduleList,
-                onModuleClick = { navigateToItemUpdate() }
-            )
-        }
+        ModuleList(
+            moduleList = module.moduleList,
+            onModuleClick = { navigateToItemUpdate() },
+
+        )
     }
 }
 
 @Composable
 private fun ModuleList(
     moduleList: List<Lesson>,
-    onModuleClick: () -> Unit
+    onModuleClick: () -> Unit,
 ) {
 
     val haptic = LocalHapticFeedback.current
     var sosto: String? = ""
 
     LazyColumn(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize().padding(end =  8.dp)
     ) {
         items(
             items = moduleList,
@@ -104,6 +102,6 @@ fun ModuleCard(
         Text(
             text = name,
             modifier = Modifier.padding(4.dp),
-            )
+        )
     }
 }
