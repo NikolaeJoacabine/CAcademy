@@ -27,7 +27,6 @@ class MainActivity : ComponentActivity() {
             }
 
             CAcademyTheme(darkTheme = darkTheme) {
-
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background

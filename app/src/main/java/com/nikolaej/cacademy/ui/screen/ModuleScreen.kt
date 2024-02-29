@@ -40,12 +40,14 @@ import com.nikolaej.cacademy.ui.navigation.NavigationDestination
 
 @Composable
 fun ModuleScreen(
-    moduleViewModel: ModuleScreenViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    moduleViewModel: ModuleScreenViewModel,
     navigateToItemUpdate: () -> Unit,
+    module: ModuleUiState
 ) {
 
 
-    val module by moduleViewModel.moduleUiState.collectAsState()
+
+
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,

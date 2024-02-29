@@ -39,7 +39,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -57,6 +59,7 @@ import com.exyte.animatednavbar.animation.balltrajectory.Parabolic
 import com.exyte.animatednavbar.animation.indendshape.Height
 import com.exyte.animatednavbar.animation.indendshape.shapeCornerRadius
 import com.exyte.animatednavbar.utils.noRippleClickable
+import com.nikolaej.cacademy.ui.AppViewModelProvider
 import com.nikolaej.cacademy.ui.CAcademyViewModel
 import com.nikolaej.cacademy.ui.screen.FinishDestination
 import com.nikolaej.cacademy.ui.screen.FinishScreen
@@ -65,15 +68,19 @@ import com.nikolaej.cacademy.ui.screen.LessonScreen
 import com.nikolaej.cacademy.ui.screen.LessonScreenCard
 import com.nikolaej.cacademy.ui.screen.LessonsDestination
 import com.nikolaej.cacademy.ui.screen.ModuleScreen
+import com.nikolaej.cacademy.ui.screen.ModuleScreenViewModel
 import com.nikolaej.cacademy.ui.screen.ProgressDestination
 import com.nikolaej.cacademy.ui.screen.ProgressScreeen
 import com.nikolaej.cacademy.ui.screen.SettingsDestination
 import com.nikolaej.cacademy.ui.screen.SettingsScreen
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScreenApp(
+    moduleViewModel: ModuleScreenViewModel = viewModel(factory = AppViewModelProvider.Factory),
     gameviewModel: CAcademyViewModel = viewModel(),
     navController: NavHostController = rememberNavController(),
     darkTheme: Boolean,
@@ -81,9 +88,14 @@ fun ScreenApp(
 ) {
     val paddingValue = WindowInsets.systemBars.asPaddingValues()
 
+
+    val module by moduleViewModel.moduleUiState.collectAsState()
+
+
     val navBackStackEntry by navController.currentBackStackEntryAsState() //получаем в текстовом виде название страницы
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
+    val coroutineScope = rememberCoroutineScope()
     Scaffold(
         topBar = {
             //верхняя информационная панель, отсюда вызывается глобальное меню в приложении
@@ -176,9 +188,16 @@ fun ScreenApp(
                 )
                 ModuleScreen(
                     navigateToItemUpdate = {
-                        gameviewModel.IndexModalBottomSheets = false
                         navController.navigate(LessonsDestination.route)
+                        coroutineScope.launch {
+                            delay(200)
+                            sheetState.hide()
+                            delay(500)
+                            gameviewModel.IndexModalBottomSheets = false
+                        }
                     },
+                    moduleViewModel = moduleViewModel,
+                    module = module
                 )
             }
         }
@@ -347,6 +366,3 @@ private fun Very_beautiful_control_panel(
         }
     }
 }
-
-
-
