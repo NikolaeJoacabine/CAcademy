@@ -46,7 +46,6 @@ import androidx.compose.ui.unit.dp
 import com.exyte.animatednavbar.utils.noRippleClickable
 import com.nikolaej.cacademy.R
 import com.nikolaej.cacademy.ui.screen.LessonScreenViewModel
-import com.nikolaej.cacademy.util.Sound
 
 
 data class ToggleableInfo(
@@ -80,7 +79,8 @@ fun task_with_a_choise(
     )
 
     val mContext = LocalContext.current
-
+    val yes: MediaPlayer = MediaPlayer.create(mContext, R.raw.pravilnyiy_otvet)
+    val no: MediaPlayer = MediaPlayer.create(mContext, R.raw.raclure_wrong)
 
     Column(
         Modifier
@@ -94,6 +94,7 @@ fun task_with_a_choise(
                 Card(
                     modifier = Modifier
                         .noRippleClickable {
+
                             name.replaceAll {
                                 it.copy(
                                     isChecked = it.text == info.text
@@ -135,8 +136,14 @@ fun task_with_a_choise(
             contentAlignment = Alignment.BottomEnd
         ) {
             FloatingActionButton(
-                onClick =
-                { isSheetOpen = true },
+                onClick = {
+                    isSheetOpen = true
+                    if (name[count].isChecked) {
+                        yes.start()
+                    } else {
+                        no.start()
+                    }
+                },
                 modifier = Modifier.padding(end = 10.dp, bottom = 10.dp)
             ) {
                 Icon(
@@ -151,6 +158,7 @@ fun task_with_a_choise(
 
     if (isSheetOpen) {
         animation = 1f
+
         ModalBottomSheet(
             sheetState = sheetState,
             onDismissRequest = {
@@ -168,8 +176,6 @@ fun task_with_a_choise(
         ) {
             when (name[count].isChecked) {
                 true -> {
-
-                    Sound(mContext = mContext, R.raw.pravilnyiy_otvet)//музыка
 
                     LinearProgressIndicator(
                         progress = progressAnimation,
@@ -203,7 +209,7 @@ fun task_with_a_choise(
 
                 else -> {
 
-                    Sound(mContext = mContext, R.raw.raclure_wrong)
+                    //Sound(mContext = mContext, R.raw.raclure_wrong)
                     LinearProgressIndicator(
                         progress = progressAnimation,
                         modifier = Modifier

@@ -192,7 +192,7 @@ fun ScreenApp(
                         coroutineScope.launch {
                             delay(200)
                             sheetState.hide()
-                            delay(500)
+
                             gameviewModel.IndexModalBottomSheets = false
                         }
                     },

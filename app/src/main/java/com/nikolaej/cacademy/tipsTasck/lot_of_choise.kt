@@ -1,13 +1,12 @@
 package com.nikolaej.cacademy.tipsTasck
 
+import android.media.MediaPlayer
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -19,14 +18,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Backspace
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.Replay
-import androidx.compose.material.icons.sharp.Info
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -45,7 +42,6 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -61,12 +57,6 @@ import androidx.compose.ui.unit.dp
 import com.exyte.animatednavbar.utils.noRippleClickable
 import com.nikolaej.cacademy.R
 import com.nikolaej.cacademy.ui.screen.LessonScreenViewModel
-import com.nikolaej.cacademy.util.Sound
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import java.util.Random
-import kotlin.math.roundToInt
 
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
@@ -82,6 +72,8 @@ fun lot_of_choise(
 
 
     val mContext = LocalContext.current
+    val yes: MediaPlayer = MediaPlayer.create(mContext, R.raw.pravilnyiy_otvet)
+    val no: MediaPlayer = MediaPlayer.create(mContext, R.raw.raclure_wrong)
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------
     val sheetState = rememberModalBottomSheetState()
@@ -101,6 +93,7 @@ fun lot_of_choise(
             durationMillis = 500, easing = FastOutSlowInEasing
         ), label = ""
     )
+
 
     Column(
         Modifier
@@ -181,6 +174,11 @@ fun lot_of_choise(
                             onClick = if (viewModel.varick.size == variantCorrect.size) {
                                 {
                                     isSheetOpen = true
+                                    if (variantCorrect == viewModel.varick) {
+                                        yes.start()
+                                    } else {
+                                        no.start()
+                                    }
                                 }
                             } else {
                                 { }
@@ -305,7 +303,6 @@ fun lot_of_choise(
                 shape = RoundedCornerShape(0.dp)
             ) {
                 if (variantCorrect == viewModel.varick) {
-                    Sound(mContext = mContext, R.raw.pravilnyiy_otvet)//музыка
                     LinearProgressIndicator(
                         progress = progressAnimation,
                         modifier = Modifier
@@ -336,7 +333,6 @@ fun lot_of_choise(
                         }
                     }
                 } else {
-                    Sound(mContext = mContext, R.raw.raclure_wrong)//музыка
                     LinearProgressIndicator(
                         progress = progressAnimation,
                         modifier = Modifier

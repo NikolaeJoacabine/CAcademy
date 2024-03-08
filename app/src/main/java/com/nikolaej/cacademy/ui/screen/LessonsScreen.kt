@@ -2,6 +2,7 @@ package com.nikolaej.cacademy.ui.screen
 
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -97,7 +98,7 @@ fun LessonScreenCard(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 8.dp, vertical = 4.dp)
-                        .noRippleClickable {
+                        .clickable {
                             if (module.passTheTask) {
                                 isSheetOpen = true
                             } else {
@@ -224,9 +225,3 @@ fun DialogWithImage(
         }
     }
 }
-
-
-
-
-
-
