@@ -55,10 +55,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.exyte.animatednavbar.utils.noRippleClickable
+import com.nikolaej.cacademy.R
 import com.nikolaej.cacademy.ui.screen.LessonScreenViewModel
+import com.nikolaej.cacademy.util.Sound
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -78,7 +81,7 @@ fun lot_of_choise(
 ) {
 
 
-
+    val mContext = LocalContext.current
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------
     val sheetState = rememberModalBottomSheetState()
@@ -286,9 +289,10 @@ fun lot_of_choise(
                 onDismissRequest = {
                     if (variantCorrect == viewModel.varick) {
                         viewModel.uuu.clear()
+                        viewModel.varick.clear()
                         isSheetOpen = false
                         viewModel.proff(prog)
-                        viewModel.progress += 1
+                        viewModel.zadan += 1
 
                     } else {
                         viewModel.varick.clear()
@@ -301,6 +305,7 @@ fun lot_of_choise(
                 shape = RoundedCornerShape(0.dp)
             ) {
                 if (variantCorrect == viewModel.varick) {
+                    Sound(mContext = mContext, R.raw.pravilnyiy_otvet)//музыка
                     LinearProgressIndicator(
                         progress = progressAnimation,
                         modifier = Modifier
@@ -331,6 +336,7 @@ fun lot_of_choise(
                         }
                     }
                 } else {
+                    Sound(mContext = mContext, R.raw.raclure_wrong)//музыка
                     LinearProgressIndicator(
                         progress = progressAnimation,
                         modifier = Modifier

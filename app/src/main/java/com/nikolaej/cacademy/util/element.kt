@@ -1,5 +1,3 @@
-package com.nikolaej.cacademy.tipsTasck
-
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text

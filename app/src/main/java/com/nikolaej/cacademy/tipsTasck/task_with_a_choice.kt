@@ -1,5 +1,6 @@
 package com.nikolaej.cacademy.tipsTasck
 
+import android.media.MediaPlayer
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -37,14 +38,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.exyte.animatednavbar.utils.noRippleClickable
+import com.nikolaej.cacademy.R
 import com.nikolaej.cacademy.ui.screen.LessonScreenViewModel
-import java.util.Random
+import com.nikolaej.cacademy.util.Sound
 
 
 data class ToggleableInfo(
@@ -76,6 +78,10 @@ fun task_with_a_choise(
             easing = FastOutSlowInEasing
         ), label = ""
     )
+
+    val mContext = LocalContext.current
+
+
     Column(
         Modifier
             .fillMaxSize()
@@ -148,7 +154,7 @@ fun task_with_a_choise(
         ModalBottomSheet(
             sheetState = sheetState,
             onDismissRequest = {
-                if(name[count].isChecked){
+                if (name[count].isChecked) {
                     isSheetOpen = false
                     viewModel.proff(prog)
                     viewModel.zadan += 1
@@ -162,6 +168,9 @@ fun task_with_a_choise(
         ) {
             when (name[count].isChecked) {
                 true -> {
+
+                    Sound(mContext = mContext, R.raw.pravilnyiy_otvet)//музыка
+
                     LinearProgressIndicator(
                         progress = progressAnimation,
                         modifier = Modifier
@@ -170,6 +179,7 @@ fun task_with_a_choise(
                         color = Color.Green
 
                     )
+
                     Column(
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally,
@@ -192,6 +202,8 @@ fun task_with_a_choise(
                 }
 
                 else -> {
+
+                    Sound(mContext = mContext, R.raw.raclure_wrong)
                     LinearProgressIndicator(
                         progress = progressAnimation,
                         modifier = Modifier
